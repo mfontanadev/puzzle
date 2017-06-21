@@ -18,7 +18,7 @@ function Desktop()
         this.m_playPanel.init(this.m_viewParent, 10, 10, 460, 460);
 
         this.m_piecesPanel = new PiecesPanel();
-        this.m_piecesPanel.init(this.m_viewParent, 400, 0, 240, 480);
+        this.m_piecesPanel.init(this.m_viewParent, 480, 10, 150, 460);
         this.loadLevel(1, this.m_piecesPanel);
 
         this.m_desktopBitmap = this.m_viewParent.getBitmapManagerInstance().getImageByName('desktop_theme1.png');

@@ -28,5 +28,8 @@ module.exports = function(app)
 	app.get ('/controllers/entities/desktop.js', 
 		function (req, res) {res.sendFile(__dirname + '/entities/desktop.js');});
 
+	app.get ('/controllers/entities/piece.js', 
+		function (req, res) {res.sendFile(__dirname + '/entities/piece.js');});
+
 	console.log("   controllers/index.js: OK");
 }

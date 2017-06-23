@@ -1,3 +1,4 @@
+
 function Desktop() 
 {
     this.m_viewParent = null;
@@ -9,6 +10,7 @@ function Desktop()
     this.m_currentLevel = null;
 
     this.m_desktopBitmap = null;
+    this.m_pieces = new Array();
 
     Desktop.prototype.init = function (_viewParent) 
     {
@@ -35,6 +37,8 @@ function Desktop()
 
     Desktop.prototype.implementGameLogic = function () 
     {
+        this.processMouseOverPieces();
+
         this.m_playPanel.implementGameLogic();
         this.m_piecesPanel.implementGameLogic();
     };
@@ -51,25 +55,64 @@ function Desktop()
 
         this.m_piecesPanel.render();
 
+        this.renderPieces() 
+    };
+
+    Desktop.prototype.renderPieces = function () 
+    {
+        for (var i = 0; i < this.m_pieces.length; i++) 
+        {
+            this.m_pieces[i].render(this.m_viewParent.m_canvasEx.m_canvas, this.m_viewParent.m_canvasEx.m_context);
+
+        }
     };
 
     // ****************************************
-    // Load level
+    // Auxiliar functions
     // ****************************************
     Desktop.prototype.loadLevel = function (_levelNumber, _piecesPanel) 
     {
-        var images = new Array();
-
-        _piecesPanel.reset();
-
+        chClearArray(this.m_pieces);
+        
         if (_levelNumber === 1)
         {
-            _piecesPanel.addPiece("puzzle_peppa_clip-1.png", 50, 50);
-            _piecesPanel.addPiece("puzzle_peppa_clip-2.png", 150, 150);
+            this.addPiece("puzzle_peppa_clip-1.png", 290, 324);
+            this.addPiece("puzzle_peppa_clip-2.png", 178, 143);
+    
         }
 
-        _piecesPanel.refresh();
+       _piecesPanel.initPiecesWithThumbails(this.m_pieces);
     };
+
+    Desktop.prototype.addPiece = function (_pieceImage, _xTarget, _yTarget) 
+    {
+        var pieceItem = new Piece();
+
+        pieceItem.init(this.m_viewParent, _pieceImage, _xTarget, _yTarget);
+
+        this.m_pieces.push(pieceItem);
+    };
+
+    Desktop.prototype.processMouseOverPieces = function () 
+    {
+        var pieces = this.m_piecesPanel.getPiecesCollection();
+        var mouse = this.m_viewParent.getMouseManagerInstance();
+
+        for (var i = 0; i < pieces.length; i++) 
+        {
+            if (pieces[i].isPieceAllocated() === false)
+            {
+                if (mouse.m_mouseClick === true)
+                {
+                    pieces[i].clicDown(mouse.m_mousePosX, mouse.m_mousePosY);
+                }
+                else
+                {
+                    pieces[i].clicUp(mouse.m_mousePosX, mouse.m_mousePosY);   
+                }                
+            }
+        }
+    }
 
 };
 

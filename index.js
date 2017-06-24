@@ -18,7 +18,7 @@ global.__configDefinitions = new reqGlobals();
 
 // Entry point.
 app.get("/", function (req, res) {
-    res.sendFile(__dirname + '/views/' + 'wishflowerView.html');
+    res.sendFile(__dirname + '/views/' + 'puzzleView.html');
 });
 
 app.get ('/favicon.ico', function (req, res) {
@@ -39,7 +39,7 @@ app.use(express.static(__dirname + '/public/assets/img'));
 app.use(express.static(__dirname + '/public/assets/snd'));
 
 // SERVICES
-var reqServiceRoute = require('./controllers/services/wishflower.Route.js');
+var reqServiceRoute = require('./controllers/services/puzzle.Route.js');
 global.__services = new reqServiceRoute(app); 
 
 // Database 
@@ -52,7 +52,7 @@ if (global.__mockDB === false)
 	if (C_USE_MONGODB_OLD_CONNECTION_TYPE === true)
 	{
 		var server = new mongodb.Server("127.0.0.1", 27017, {});
-		var dbBaseTest = new mongodb.Db('wishFlowerDB', server, {});
+		var dbBaseTest = new mongodb.Db('puzzleDB', server, {});
 		dbBaseTest.open
 		(
 			function (error, client) 
@@ -78,11 +78,11 @@ if (global.__mockDB === false)
 
 		if (C_USE_MLAB_DATABASE_HOST === true)
 		{
-			urlDB = "mongodb://wishflowerdb_admin:wishflowerdb_pass@ds147421.mlab.com:47421/wishflowerdb"
+			urlDB = "mongodb://puzzledb_admin:puzzledb_pass@ds147421.mlab.com:47421/puzzledb"
 		}
 		else
 		{
-			urlDB = "mongodb://localhost:27017/wishflowerdb"
+			urlDB = "mongodb://localhost:27017/puzzledb"
 		}
 
 		mongoClient.connect

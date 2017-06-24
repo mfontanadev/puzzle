@@ -1,8 +1,8 @@
 module.exports = function(app)
 {
 	// ACTIVITIES
-	app.get ('/controllers/activities/wishflowerPlayActivity.js', 
-		function (req, res) {res.sendFile(__dirname + '/activities/wishflowerPlayActivity.js');});
+	app.get ('/controllers/activities/puzzlePlayActivity.js', 
+		function (req, res) {res.sendFile(__dirname + '/activities/puzzlePlayActivity.js');});
 
 	// FLOWS
 	app.get ('/controllers/flows/playFlow.js', 
@@ -12,11 +12,11 @@ module.exports = function(app)
 	app.get ('/controllers/errorPageController.js', 
 		function (req, res) {res.sendFile(__dirname + '/errorPageController.js');});
 
-	app.get ('/controllers/wishflowerController.js', 
-		function (req, res) {res.sendFile(__dirname + '/wishflowerController.js');});
+	app.get ('/controllers/puzzleController.js', 
+		function (req, res) {res.sendFile(__dirname + '/puzzleController.js');});
 
-	app.get ('/controllers/wishflowerContext.js', 
-		function (req, res) {res.sendFile(__dirname + '/wishflowerContext.js');});
+	app.get ('/controllers/puzzleContext.js', 
+		function (req, res) {res.sendFile(__dirname + '/puzzleContext.js');});
 
 	// ENTITIES
 	app.get ('/controllers/entities/playPanel.js', 

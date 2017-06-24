@@ -50,11 +50,11 @@ function appInitContext()
 	//drawImageTransparent(viewMngr.m_canvasEx.m_canvas, viewMngr.m_canvasEx.m_context, viewMngr.m_bitmapManager.getImage(0), 0,0, 1);
 	//viewMngr.m_soundManager.playSoundTest();	
 
-	var dataContext = new WishflowerContext();
+	var dataContext = new PuzzleContext();
 	viewMngr.initializeDataContext(dataContext);
  	viewMngr.initializeActivities();
 
  	// Start animation loop.
-	viewMngr.navigateTo(WishflowerContext.C_ACTIVITY_PLAY);
+	viewMngr.navigateTo(PuzzleContext.C_ACTIVITY_PLAY);
 	viewMngr.animationCycle();	
 }

@@ -9,8 +9,8 @@ function db_wish()
 		collection.drop();
 
 		var res = this.automaticWishEntryGenerator(
-			global.__configDefinitions.get_C_TREE_LEVELS(), 
-			global.__configDefinitions.get_C_TREE_FLOWERS());
+			2, 
+			2;
 
 		// Clear wish field.
 		var docs = JSON.parse(res);

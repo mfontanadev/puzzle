@@ -98,21 +98,33 @@ function Desktop()
         var pieces = this.m_piecesPanel.getPiecesCollection();
         var mouse = this.m_viewParent.getMouseManagerInstance();
 
-        for (var i = 0; i < pieces.length; i++) 
+        var index = 0;
+        var mouseOverPIeceIndex = -1;
+
+        for (index = 0; index < pieces.length; index++) 
         {
-            if (pieces[i].isPieceAllocated() === false)
+            if (pieces[index].isMouseOver() === true)
+            {
+                mouseOverPIeceIndex = index;
+            }
+        }
+
+        for (index = 0; index < pieces.length; index++) 
+        {
+            if (pieces[index].isPieceAllocated() === false && 
+                (mouseOverPIeceIndex === -1) ||  (mouseOverPIeceIndex !== -1 && index === mouseOverPIeceIndex))
             {
                 if (mouse.m_mouseClick === true)
                 {
-                    pieces[i].clicDown(mouse.m_mousePosX, mouse.m_mousePosY);
+                    pieces[index].clicDown(mouse.m_mousePosX, mouse.m_mousePosY);
                 }
                 else
                 {
-                    pieces[i].clicUp(mouse.m_mousePosX, mouse.m_mousePosY);   
+                    pieces[index].clicUp(mouse.m_mousePosX, mouse.m_mousePosY);   
                 }                
             }
         }
-    }
+    };
 
 };
 

@@ -1,7 +1,7 @@
 {
-  "name": "Wishflower",
+  "name": "Puzzle",
   "version": "1.0.0",
-  "description": "Tree of wishflowers",
+  "description": "Puzzle game",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"

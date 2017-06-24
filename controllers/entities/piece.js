@@ -11,11 +11,15 @@ function Piece ()
     this.m_y = 0;
     this.m_rc = new ChRect();
     this.m_mouseOver = false;
+    this.m_viewParent = null;
+    this.m_avoidRecursivity = false;
 
     Piece.prototype.init = function (_viewParent, _pieceImage, _xTarget, _yTarget) 
     {
+        this.m_viewParent = _viewParent;
+
         if (_pieceImage !== "")
-            this.m_bitmap = _viewParent.getBitmapManagerInstance().getImageByName(_pieceImage);
+            this.m_bitmap = this.m_viewParent.getBitmapManagerInstance().getImageByName(_pieceImage);
 
         this.m_rectThumbail = new ChRect(); 
         this.m_xTarget = _xTarget;
@@ -43,10 +47,18 @@ function Piece ()
             if (this.isOverTarget(_cx, _cy) === true)
             {
                 this.updateMouseOverPosition(this.m_xTarget, this.m_yTarget);
+             
+                if (this.m_avoidRecursivity === false)
+                {
+                    this.m_viewParent.getSoundManagerInstance().playSoundByName("allocated.wav");
+
+                    this.m_avoidRecursivity = true;
+                }
             }
             else
             {
                 this.updateMouseOverPosition(_cx, _cy);
+                this.m_avoidRecursivity = false;
             }
         }
     }
@@ -126,5 +138,9 @@ function Piece ()
         this.m_thumbailScale = rectShortesttSide / imageLongestSide;
     };    
 
+    Piece.prototype.isMouseOver = function () 
+    {
+        return (this.m_mouseOver === true);
+    };
 };
 

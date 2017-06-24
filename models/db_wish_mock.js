@@ -9,8 +9,8 @@ function db_wish_mock()
 		console.log("mock initOnce");
 
 		var res = this.automaticWishEntryGenerator(
-			global.__configDefinitions.get_C_TREE_LEVELS(), 
-			global.__configDefinitions.get_C_TREE_FLOWERS());
+			2, 
+			2);
 
 		// Clear wish field.
 		this.m_wishes = JSON.parse(res);

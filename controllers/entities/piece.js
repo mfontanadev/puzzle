@@ -127,15 +127,18 @@ function Piece ()
 
     Piece.prototype.updateThumbailScale = function () 
     {
-        var imageLongestSide = this.m_bitmap.width;
-        if (this.m_bitmap.height > this.m_bitmap.width)
-            imageLongestSide = this.m_bitmap.height;
+        if (this.m_bitmap !== null)
+        {
+            var imageLongestSide = this.m_bitmap.width;
+            if (this.m_bitmap.height > this.m_bitmap.width)
+                imageLongestSide = this.m_bitmap.height;
 
-        var rectShortesttSide = this.m_rectThumbail.width();
-        if (this.m_rectThumbail.height() < this.m_rectThumbail.width())
-            rectShortesttSide = this.m_rectThumbail.height();
+            var rectShortesttSide = this.m_rectThumbail.width();
+            if (this.m_rectThumbail.height() < this.m_rectThumbail.width())
+                rectShortesttSide = this.m_rectThumbail.height();
 
-        this.m_thumbailScale = rectShortesttSide / imageLongestSide;
+            this.m_thumbailScale = rectShortesttSide / imageLongestSide;
+        }
     };    
 
     Piece.prototype.isMouseOver = function () 

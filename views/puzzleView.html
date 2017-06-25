@@ -8,8 +8,8 @@
 			<!-- Viewport -->
 			<meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
 			<style>
-				body { margin: 0; padding: 0; overflow-y: hidden; overflow-x: hidden;}
-				image, canvas {
+				body { position: fixed; margin: 0; padding: 0; overflow-y: hidden; overflow-x: hidden; overflow: hidden;}
+ 				image, canvas {
 				    user-select: none;
 				    -ms-user-select: none;
 				    -webkit-user-select: none;
@@ -52,7 +52,6 @@
 		</head>
 
 		<body bgcolor="#FFFFFF">
-			<canvas id="idCanvasT" width="1300" height="800" style="background:#FF0000; disploy:block;"></canvas>
 			<canvas id="idCanvas" width="640" height="480" style="solid #FF0000;"></canvas>
 		</body>
 	</html>

@@ -47,13 +47,13 @@ function Desktop()
     {
         this.m_playPanel.render();
 
+        this.m_piecesPanel.render();
+
         drawImageTransparent( 
             this.m_viewParent.m_canvasEx.m_canvas, 
             this.m_viewParent.m_canvasEx.m_context, 
             this.m_desktopBitmap, 
             0, 0, 1);
-
-        this.m_piecesPanel.render();
 
         this.renderPieces() 
     };

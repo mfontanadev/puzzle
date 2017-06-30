@@ -19,7 +19,7 @@ function PlayPanel()
         this.m_width = _width;
         this.m_height = _height;
 
-        this.m_bitmap = this.m_viewParent.getBitmapManagerInstance().getImageByName('puzzle_peppa_background.png');
+        this.m_bitmap = null;
     };
 
     // ****************************************
@@ -40,14 +40,23 @@ function PlayPanel()
                     this.m_viewParent.m_canvasEx.m_context, 
                     this.m_x1, this.m_y1,
                     this.m_width, this.m_height, "gray");
-
+        
         drawImageScaled( 
-                    this.m_viewParent.m_canvasEx.m_canvas, 
-                    this.m_viewParent.m_canvasEx.m_context, 
-                    this.m_bitmap, 
-                    this.m_x1, this.m_y1,
-                    this.m_width, this.m_height);
+                        this.m_viewParent.m_canvasEx.m_canvas, 
+                        this.m_viewParent.m_canvasEx.m_context, 
+                        this.m_bitmap, 
+                        this.m_x1, this.m_y1,
+                        this.m_width, this.m_height);
     };
+
+    // ****************************************
+    // Auxiliars
+    // ****************************************
+    PlayPanel.prototype.setBackgroundImage = function (_imageName) 
+    {
+        this.m_bitmap = this.m_viewParent.getBitmapManagerInstance().getImageByName(_imageName);
+    }; 
+
 };
 
 

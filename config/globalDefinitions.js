@@ -6,11 +6,29 @@ var global_sound_definition = [
 // All bitmaps used by de app. ResourceManager will preload all of them.
 var global_bitmap_definition = 
 [
-    'puzzles\\puzzle_peppa_background.png',
-    'puzzles\\puzzle_peppa_clip-1.png',
-    'puzzles\\puzzle_peppa_clip-2.png',
+    'puzzles\\01\\puzzle_peppa_background.png',
+    'puzzles\\01\\puzzle_peppa_clip-1.png',
+    'puzzles\\01\\puzzle_peppa_clip-2.png',
 
-    'desktop_theme1.png'
+    'puzzles\\02\\puzzle_peppa2_background.png',
+    'puzzles\\02\\puzzle_peppa2_clip-1.png',
+    'puzzles\\02\\puzzle_peppa2_clip-2.png',
+
+    'puzzles\\03\\puzzle_peppa3_background.png',
+    'puzzles\\03\\puzzle_peppa3_clip-1.png',
+    'puzzles\\03\\puzzle_peppa3_clip-2.png',
+
+    'desktop_theme1.png',
+
+    'toolbar_close_up.png',
+    'toolbar_close_down.png',
+    'toolbar_open_up.png',
+    'toolbar_open_down.png',
+    'toolbar_background.png',
+    'left_up.png',
+    'left_down.png',
+    'right_up.png',
+    'right_down.png'
 ];
 
 // Definition of states for the machine of finite states used in app main loop. 
@@ -26,7 +44,7 @@ function Globals()
 { 
     this.m_mainLoopState = new MainLoopState(); 
 
-    Globals.prototype.get_MoinLoopState = function()
+    Globals.prototype.get_MainLoopState = function()
     {
         return this.m_mainLoopState;
     }

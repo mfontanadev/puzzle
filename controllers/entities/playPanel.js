@@ -35,6 +35,12 @@ function PlayPanel()
 
     PlayPanel.prototype.render = function () 
     {
+        renderRectangleFilled( 
+                    this.m_viewParent.m_canvasEx.m_canvas, 
+                    this.m_viewParent.m_canvasEx.m_context, 
+                    this.m_x1, this.m_y1,
+                    this.m_width, this.m_height, "gray");
+
         drawImageScaled( 
                     this.m_viewParent.m_canvasEx.m_canvas, 
                     this.m_viewParent.m_canvasEx.m_context, 

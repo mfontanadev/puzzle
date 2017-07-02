@@ -2,6 +2,9 @@ Desktop.C_LEVELS_COUNT = 3;
 Desktop.C_PLAY_PANEL_WIDTH = 460;
 Desktop.C_PIECES_PANEL_WIDTH = 150;
 
+Desktop.C_LEVEL_SELECTOR_WIDTH = 180;
+Desktop.C_LEVEL_SELECTOR_HEIGHT = 60;
+
 function Desktop() 
 {
     this.m_viewParent = null;
@@ -10,17 +13,14 @@ function Desktop()
 
     this.m_playPanel = null; 
     this.m_piecesPanel = null; 
-    this.m_currentLevel = null;
+    this.m_levelSelector = null;
 
     this.m_desktopBitmap = null;
     this.m_pieces = new Array();
 
     this.m_currentLevelIndex = 0;
 
-    this.m_btnPreviousLevel = null;
-    this.m_btnNextLevel = null;
-    this.m_btnOpenToolbar = null;
-    this.m_btnCloseToolbar = null;
+    this.m_btnLevelSelector = null;
 
     Desktop.prototype.init = function (_viewParent) 
     {
@@ -36,23 +36,29 @@ function Desktop()
                                     Desktop.C_PLAY_PANEL_WIDTH + 20, 10, 
                                     Desktop.C_PIECES_PANEL_WIDTH, Desktop.C_PLAY_PANEL_WIDTH);
 
+        this.m_levelSelector = new LevelSelector();
+        this.m_levelSelector.init(this.m_viewParent,  
+                                    (Desktop.C_PLAY_PANEL_WIDTH / 2) + 15, Desktop.C_PLAY_PANEL_WIDTH / 2, 
+                                    Desktop.C_LEVEL_SELECTOR_WIDTH, Desktop.C_LEVEL_SELECTOR_HEIGHT,
+                                    this);
+
         this.m_currentLevelIndex = 0;
         this.loadLevel(this.m_currentLevelIndex, this.m_piecesPanel);
 
         this.m_desktopBitmap = this.m_viewParent.getBitmapManagerInstance().getImageByName('desktop_theme1.png');
 
+        // Open/Close level selector button.   
         var toolbarCenterX = Desktop.C_PLAY_PANEL_WIDTH / 2;
         var toolbarCenterY = Desktop.C_PLAY_PANEL_WIDTH;
-
-        this.m_btnPreviousLevel = new CanvasControl();
-        this.m_btnPreviousLevel.initButtonStyle(this.m_viewParent.m_canvasEx, 
-                                toolbarCenterX + 7, toolbarCenterY - 30, 30, 30, "");
-        this.m_btnPreviousLevel.setImage("toolbar_open_up.png");
-        this.m_btnPreviousLevel.setImageDown("toolbar_open_down.png");
-        //this.m_btnPreviousLevel._onClick = this.btnSoundOn_controller;
-        this.m_btnPreviousLevel.setEnabled(true);
-        this.m_btnPreviousLevel.setVisible(true);
-   };
+        this.m_btnLevelSelector = new CanvasControl();
+        this.m_btnLevelSelector.initButtonStyle(this.m_viewParent.m_canvasEx, 
+                                toolbarCenterX - 15 + 15, toolbarCenterY - 30, 30, 30, "");
+        this.m_btnLevelSelector.setImage("toolbar_open_up.png");
+        this.m_btnLevelSelector.setImageDown("toolbar_open_down.png");
+        this.m_btnLevelSelector.registerOnClick(this, this.btnLevelSelector_click_controller);
+        this.m_btnLevelSelector.setEnabled(true);
+        this.m_btnLevelSelector.setVisible(true);
+    };
 
     // ****************************************
     // Main cicle: handleInputs, implementGameLogic, render
@@ -69,8 +75,7 @@ function Desktop()
 
         this.m_playPanel.implementGameLogic();
         this.m_piecesPanel.implementGameLogic();
-
-        //this.m_btnPreviousLevel.implementGameLogic();
+        this.m_levelSelector.implementGameLogic();
     };
 
     Desktop.prototype.render = function () 
@@ -85,9 +90,10 @@ function Desktop()
             this.m_desktopBitmap, 
             0, 0, 1);
 
-        this.m_btnPreviousLevel.render();
-
         this.renderPieces() 
+
+        this.m_btnLevelSelector.render();
+        this.m_levelSelector.render();
     };
 
     Desktop.prototype.renderPieces = function () 
@@ -134,6 +140,7 @@ function Desktop()
         {
             this.m_currentLevelIndex = this.getLevelsCount() - 1;
         }
+        this.loadLevel(this.m_currentLevelIndex, this.m_piecesPanel);
     };
 
     Desktop.prototype.previousLevel = function () 
@@ -143,6 +150,7 @@ function Desktop()
         {
             this.m_currentLevelIndex = 0;
         }
+        this.loadLevel(this.m_currentLevelIndex, this.m_piecesPanel);
     };
 
     Desktop.prototype.getLevelsCount = function () 
@@ -194,6 +202,10 @@ function Desktop()
         }
     };
 
+    Desktop.prototype.btnLevelSelector_click_controller = function (_event, _sender) 
+    {
+        _sender.getOnClickParent().m_levelSelector.show();
+    }
 };
 
 

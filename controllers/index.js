@@ -31,5 +31,8 @@ module.exports = function(app)
 	app.get ('/controllers/entities/piece.js', 
 		function (req, res) {res.sendFile(__dirname + '/entities/piece.js');});
 
+	app.get ('/controllers/entities/levelSelector.js', 
+		function (req, res) {res.sendFile(__dirname + '/entities/levelSelector.js');});
+
 	console.log("   controllers/index.js: OK");
 }

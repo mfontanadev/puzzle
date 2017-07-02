@@ -39,7 +39,7 @@ function MainLoopState()
 { 
 }
 
-Globals.C_APPLICATION_TITLE_AND_VERSION = 'Puzzle v1.1.0';
+Globals.C_APPLICATION_TITLE_AND_VERSION = 'Puzzle v1.2.0';
 function Globals() 
 { 
     this.m_mainLoopState = new MainLoopState(); 

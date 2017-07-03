@@ -50,7 +50,7 @@ function LevelSelector()
 
         this.m_btnBack = new CanvasControl();
         this.m_btnBack.initButtonStyle(this.m_viewParent.m_canvasEx, 
-                                this.m_x1 - 15, this.m_y1 - 5, 30, 30, "");
+                                this.m_x1 - 15, this.m_y1 - 8, 30, 30, "");
         this.m_btnBack.setImage("toolbar_close_up.png") ;
         this.m_btnBack.setImageDown("toolbar_close_down.png");
         this.m_btnBack.registerOnClick(this, this.btnBack_click_controller);

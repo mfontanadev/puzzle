@@ -142,7 +142,6 @@ function LevelSelector()
 
     LevelSelector.prototype.btnNextLevel_click_controller = function (_event, _sender) 
     {
-        console.log("next level");
         _sender.getOnClickParent().m_parentDesktop.nextLevel();
     }; 
 

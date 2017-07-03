@@ -1,6 +1,7 @@
 // All sounds used by de app. SoundManager will preload all of them.
 var global_sound_definition = [
-    {src:"allocated.wav", id:0}
+    {src:"allocated.wav", id:0},
+    {src:"level_finished.wav", id:1}
 ];
 
 // All bitmaps used by de app. ResourceManager will preload all of them.

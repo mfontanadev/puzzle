@@ -85,6 +85,7 @@ function Desktop()
 
             if (this.isLevelFinished() === true)
             {
+                this.m_viewParent.getSoundManagerInstance().playSoundByName("level_finished.wav");
                 this.m_levelSelector.setConfirmationMode();       
                 this.m_state = Desktop.C_STATE_NEXT_LEVEL_CONFIRMATION;       
             }
@@ -117,7 +118,7 @@ function Desktop()
             renderRectangleFilled(
                 this.m_viewParent.m_canvasEx.m_canvas, 
                 this.m_viewParent.m_canvasEx.m_context, 
-                0, 0, this.m_viewParent.m_canvasEx.m_canvasWidth, this.m_viewParent.m_canvasEx.m_canvasHeight,
+                0, 0, this.m_viewParent.m_canvasEx.m_canvas.width, this.m_viewParent.m_canvasEx.m_canvas.height,
                 rgbaToColor(0,0,0, 0.5));
 
         }

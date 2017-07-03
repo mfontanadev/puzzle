@@ -52,7 +52,7 @@ function Desktop()
         var toolbarCenterY = Desktop.C_PLAY_PANEL_WIDTH;
         this.m_btnLevelSelector = new CanvasControl();
         this.m_btnLevelSelector.initButtonStyle(this.m_viewParent.m_canvasEx, 
-                                toolbarCenterX - 15 + 15, toolbarCenterY - 30, 30, 30, "");
+                                toolbarCenterX - 7 + 15, toolbarCenterY - 15, 30, 30, "");
         this.m_btnLevelSelector.setImage("toolbar_open_up.png");
         this.m_btnLevelSelector.setImageDown("toolbar_open_down.png");
         this.m_btnLevelSelector.registerOnClick(this, this.btnLevelSelector_click_controller);
@@ -71,11 +71,16 @@ function Desktop()
 
     Desktop.prototype.implementGameLogic = function () 
     {
-        this.processMouseOverPieces();
-
-        this.m_playPanel.implementGameLogic();
-        this.m_piecesPanel.implementGameLogic();
-        this.m_levelSelector.implementGameLogic();
+        if (this.m_levelSelector.isVisible() === false)
+        {
+            this.processMouseOverPieces();
+            this.m_playPanel.implementGameLogic();
+            this.m_piecesPanel.implementGameLogic();
+        }
+        else
+        {
+            this.m_levelSelector.implementGameLogic();
+        }
     };
 
     Desktop.prototype.render = function () 
@@ -206,6 +211,19 @@ function Desktop()
     {
         _sender.getOnClickParent().m_levelSelector.show();
     }
+
+    Desktop.prototype.showLevelSelectorIcon = function () 
+    {
+        this.m_btnLevelSelector.setEnabled(true);
+        this.m_btnLevelSelector.setVisible(true);
+    }; 
+
+    Desktop.prototype.hideLevelSelectorIcon = function () 
+    {
+        this.m_btnLevelSelector.setEnabled(false);
+        this.m_btnLevelSelector.setVisible(false);
+    }; 
+
 };
 
 

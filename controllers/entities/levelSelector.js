@@ -29,9 +29,10 @@ function LevelSelector()
 
         this.m_parentDesktop = _parentDesktop;
 
+        var middleW = _width / 2;
         this.m_btnPreviousLevel = new CanvasControl();
         this.m_btnPreviousLevel.initButtonStyle(this.m_viewParent.m_canvasEx, 
-                                this.m_x1 - 60, this.m_y1, 30, 30, "");
+                                this.m_x1 -middleW + 20, this.m_y1 - 20, 30, 30, "");
         this.m_btnPreviousLevel.setImage("left_up.png") ;
         this.m_btnPreviousLevel.setImageDown("left_down.png");
         this.m_btnPreviousLevel.registerOnClick(this, this.btnPreviousLevel_click_controller);
@@ -40,7 +41,7 @@ function LevelSelector()
 
         this.m_btnNextLevel = new CanvasControl();
         this.m_btnNextLevel.initButtonStyle(this.m_viewParent.m_canvasEx, 
-                                this.m_x1 + 60, this.m_y1, 30, 30, "");
+                                this.m_x1 + middleW - 30 - 20, this.m_y1 - 20, 30, 30, "");
         this.m_btnNextLevel.setImage("right_up.png") ;
         this.m_btnNextLevel.setImageDown("right_down.png");
         this.m_btnNextLevel.registerOnClick(this, this.btnNextLevel_click_controller);
@@ -49,7 +50,7 @@ function LevelSelector()
 
         this.m_btnBack = new CanvasControl();
         this.m_btnBack.initButtonStyle(this.m_viewParent.m_canvasEx, 
-                                this.m_x1, this.m_y1, 30, 30, "");
+                                this.m_x1 - 15, this.m_y1 - 5, 30, 30, "");
         this.m_btnBack.setImage("toolbar_close_up.png") ;
         this.m_btnBack.setImageDown("toolbar_close_down.png");
         this.m_btnBack.registerOnClick(this, this.btnBack_click_controller);
@@ -101,6 +102,7 @@ function LevelSelector()
         this.m_btnBack.setEnabled(true);
         this.m_btnBack.setVisible(true);
 
+        this.m_parentDesktop.hideLevelSelectorIcon();
     }; 
 
     LevelSelector.prototype.hide = function () 
@@ -115,6 +117,8 @@ function LevelSelector()
 
         this.m_btnBack.setEnabled(false);
         this.m_btnBack.setVisible(false);
+
+        this.m_parentDesktop.showLevelSelectorIcon();        
     }; 
 
 
@@ -131,6 +135,11 @@ function LevelSelector()
     LevelSelector.prototype.btnBack_click_controller = function (_event, _sender) 
     {
         _sender.getOnClickParent().hide();
+    }; 
+
+    LevelSelector.prototype.isVisible = function () 
+    {
+        return this.m_visible === true;
     }; 
 
 };

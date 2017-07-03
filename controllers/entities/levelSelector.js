@@ -15,8 +15,9 @@ function LevelSelector()
     this.m_btnBack = null;
     
     this.m_parentDesktop = null;
+    this.m_confirmationMode = false;
 
-    LevelSelector.prototype.init = function (_viewParent, _x1, _y1, _width, _height, _parentDesktop) 
+    LevelSelector.prototype.init = function (_viewParent, _x1, _y1, _width, _height) 
     {
         this.m_viewParent = _viewParent;
 
@@ -27,8 +28,6 @@ function LevelSelector()
 
         this.m_backgroundBitmap = this.m_viewParent.getBitmapManagerInstance().getImageByName("toolbar_background.png");
 
-        this.m_parentDesktop = _parentDesktop;
-
         var middleW = _width / 2;
         this.m_btnPreviousLevel = new CanvasControl();
         this.m_btnPreviousLevel.initButtonStyle(this.m_viewParent.m_canvasEx, 
@@ -36,8 +35,8 @@ function LevelSelector()
         this.m_btnPreviousLevel.setImage("left_up.png") ;
         this.m_btnPreviousLevel.setImageDown("left_down.png");
         this.m_btnPreviousLevel.registerOnClick(this, this.btnPreviousLevel_click_controller);
-        this.m_btnPreviousLevel.setEnabled(true);
-        this.m_btnPreviousLevel.setVisible(true);
+        this.m_btnPreviousLevel.setEnabled(false);
+        this.m_btnPreviousLevel.setVisible(false);
 
         this.m_btnNextLevel = new CanvasControl();
         this.m_btnNextLevel.initButtonStyle(this.m_viewParent.m_canvasEx, 
@@ -45,8 +44,8 @@ function LevelSelector()
         this.m_btnNextLevel.setImage("right_up.png") ;
         this.m_btnNextLevel.setImageDown("right_down.png");
         this.m_btnNextLevel.registerOnClick(this, this.btnNextLevel_click_controller);
-        this.m_btnNextLevel.setEnabled(true);
-        this.m_btnNextLevel.setVisible(true);
+        this.m_btnNextLevel.setEnabled(false);
+        this.m_btnNextLevel.setVisible(false);
 
         this.m_btnBack = new CanvasControl();
         this.m_btnBack.initButtonStyle(this.m_viewParent.m_canvasEx, 
@@ -54,8 +53,8 @@ function LevelSelector()
         this.m_btnBack.setImage("toolbar_close_up.png") ;
         this.m_btnBack.setImageDown("toolbar_close_down.png");
         this.m_btnBack.registerOnClick(this, this.btnBack_click_controller);
-        this.m_btnBack.setEnabled(true);
-        this.m_btnBack.setVisible(true);
+        this.m_btnBack.setEnabled(false);
+        this.m_btnBack.setVisible(false);
     };
 
     // ****************************************
@@ -121,6 +120,20 @@ function LevelSelector()
         this.m_parentDesktop.showLevelSelectorIcon();        
     }; 
 
+    LevelSelector.prototype.back = function () 
+    {
+        if (this.m_confirmationMode === false)
+        {
+            this.hide();
+        }
+        else
+        {
+            this.m_confirmationMode = false;
+            this.m_parentDesktop.nextLevel();
+            this.hide();
+        }
+    }; 
+
 
     LevelSelector.prototype.btnPreviousLevel_click_controller = function (_event, _sender) 
     {
@@ -134,7 +147,7 @@ function LevelSelector()
 
     LevelSelector.prototype.btnBack_click_controller = function (_event, _sender) 
     {
-        _sender.getOnClickParent().hide();
+        _sender.getOnClickParent().back();
     }; 
 
     LevelSelector.prototype.isVisible = function () 
@@ -142,5 +155,33 @@ function LevelSelector()
         return this.m_visible === true;
     }; 
 
+    LevelSelector.prototype.registerDesktop = function (_desktop) 
+    {
+        return this.m_parentDesktop = _desktop;
+    };
+
+    LevelSelector.prototype.registerDesktop = function (_desktop) 
+    {
+        return this.m_parentDesktop = _desktop;
+    };
+
+    LevelSelector.prototype.setConfirmationMode = function () 
+    {
+        this.m_confirmationMode = true;
+
+        this.m_visible = true;
+
+        this.m_btnPreviousLevel.setEnabled(false);
+        this.m_btnPreviousLevel.setVisible(false);
+
+        this.m_btnNextLevel.setEnabled(false);
+        this.m_btnNextLevel.setVisible(false);
+
+        this.m_btnBack.setEnabled(true);
+        this.m_btnBack.setVisible(true);
+
+        this.m_parentDesktop.hideLevelSelectorIcon();
+    };
+    
 };
 

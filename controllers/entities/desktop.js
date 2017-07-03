@@ -1,15 +1,19 @@
-Desktop.C_LEVELS_COUNT = 3;
+Desktop.C_LEVELS_COUNT = 2;
 Desktop.C_PLAY_PANEL_WIDTH = 460;
 Desktop.C_PIECES_PANEL_WIDTH = 150;
 
 Desktop.C_LEVEL_SELECTOR_WIDTH = 180;
 Desktop.C_LEVEL_SELECTOR_HEIGHT = 60;
 
+Desktop.C_STATE_NOT_SET = -1;
+Desktop.C_STATE_PLAYING = 0;
+Desktop.C_STATE_SELECTING_LEVEL = 1;
+Desktop.C_STATE_NEXT_LEVEL_CONFIRMATION = 2;
+
 function Desktop() 
 {
     this.m_viewParent = null;
-
-    this.m_type = Desktop.C_Desktop_TYPE_NOT_SET;
+    this.m_state = Desktop.C_STATE_NOT_SET;
 
     this.m_playPanel = null; 
     this.m_piecesPanel = null; 
@@ -39,8 +43,8 @@ function Desktop()
         this.m_levelSelector = new LevelSelector();
         this.m_levelSelector.init(this.m_viewParent,  
                                     (Desktop.C_PLAY_PANEL_WIDTH / 2) + 15, Desktop.C_PLAY_PANEL_WIDTH / 2, 
-                                    Desktop.C_LEVEL_SELECTOR_WIDTH, Desktop.C_LEVEL_SELECTOR_HEIGHT,
-                                    this);
+                                    Desktop.C_LEVEL_SELECTOR_WIDTH, Desktop.C_LEVEL_SELECTOR_HEIGHT);
+        this.m_levelSelector.registerDesktop(this);  
 
         this.m_currentLevelIndex = 0;
         this.loadLevel(this.m_currentLevelIndex, this.m_piecesPanel);
@@ -58,6 +62,8 @@ function Desktop()
         this.m_btnLevelSelector.registerOnClick(this, this.btnLevelSelector_click_controller);
         this.m_btnLevelSelector.setEnabled(true);
         this.m_btnLevelSelector.setVisible(true);
+
+        this.m_state = Desktop.C_STATE_PLAYING;
     };
 
     // ****************************************
@@ -71,13 +77,21 @@ function Desktop()
 
     Desktop.prototype.implementGameLogic = function () 
     {
-        if (this.m_levelSelector.isVisible() === false)
+        if (this.m_state === Desktop.C_STATE_PLAYING)
         {
             this.processMouseOverPieces();
             this.m_playPanel.implementGameLogic();
             this.m_piecesPanel.implementGameLogic();
+
+            if (this.isLevelFinished() === true)
+            {
+                console.log("finished");
+                this.m_levelSelector.setConfirmationMode();       
+                this.m_state = Desktop.C_STATE_NEXT_LEVEL_CONFIRMATION;       
+            }
         }
-        else
+        else if (this.m_state === Desktop.C_STATE_SELECTING_LEVEL ||
+                 this.m_state === Desktop.C_STATE_NEXT_LEVEL_CONFIRMATION)
         {
             this.m_levelSelector.implementGameLogic();
         }
@@ -98,6 +112,17 @@ function Desktop()
         this.renderPieces() 
 
         this.m_btnLevelSelector.render();
+
+        if (this.m_state !== Desktop.C_STATE_PLAYING)
+        {
+            renderRectangleFilled(
+                this.m_viewParent.m_canvasEx.m_canvas, 
+                this.m_viewParent.m_canvasEx.m_context, 
+                0, 0, this.m_viewParent.m_canvasEx.m_canvasWidth, this.m_viewParent.m_canvasEx.m_canvasHeight,
+                rgbaToColor(0,0,0, 0.5));
+
+        }
+
         this.m_levelSelector.render();
     };
 
@@ -124,15 +149,11 @@ function Desktop()
         }
         else if (_levelNumber === 1)
         {
-            this.addPiece("puzzle_peppa2_clip-1.png", 290, 324);
-            this.addPiece("puzzle_peppa2_clip-2.png", 178, 143);
+            this.addPiece("puzzle_peppa2_clip-1.png", 81, 255);
+            this.addPiece("puzzle_peppa2_clip-2.png", 77, 98);
+            this.addPiece("puzzle_peppa2_clip-3.png", 345, 220);
+            this.addPiece("puzzle_peppa2_clip-4.png", 194, 390);
             this.m_playPanel.setBackgroundImage('puzzle_peppa2_background.png');
-        }
-        else if (_levelNumber === 2)
-        {
-            this.addPiece("puzzle_peppa3_clip-1.png", 290, 324);
-            this.addPiece("puzzle_peppa3_clip-2.png", 178, 143);
-            this.m_playPanel.setBackgroundImage('puzzle_peppa3_background.png');            
         }
 
        _piecesPanel.initPiecesWithThumbails(this.m_pieces);
@@ -143,7 +164,7 @@ function Desktop()
         this.m_currentLevelIndex++;
         if (this.m_currentLevelIndex >= this.getLevelsCount())
         {
-            this.m_currentLevelIndex = this.getLevelsCount() - 1;
+            this.m_currentLevelIndex = 0;
         }
         this.loadLevel(this.m_currentLevelIndex, this.m_piecesPanel);
     };
@@ -153,7 +174,7 @@ function Desktop()
         this.m_currentLevelIndex--;
         if (this.m_currentLevelIndex < 0)
         {
-            this.m_currentLevelIndex = 0;
+            this.m_currentLevelIndex = this.getLevelsCount() - 1;
         }
         this.loadLevel(this.m_currentLevelIndex, this.m_piecesPanel);
     };
@@ -216,14 +237,35 @@ function Desktop()
     {
         this.m_btnLevelSelector.setEnabled(true);
         this.m_btnLevelSelector.setVisible(true);
+
+        this.m_state = Desktop.C_STATE_PLAYING;
     }; 
 
     Desktop.prototype.hideLevelSelectorIcon = function () 
     {
         this.m_btnLevelSelector.setEnabled(false);
         this.m_btnLevelSelector.setVisible(false);
+
+        this.m_state = Desktop.C_STATE_SELECTING_LEVEL;
     }; 
 
+    Desktop.prototype.isLevelFinished = function () 
+    {
+        var pieces = this.m_piecesPanel.getPiecesCollection();
+        var allPiecesAllocated = true; 
+
+        // Get first piece non allocated.
+        for (index = 0; index < pieces.length; index++) 
+        {
+            if (pieces[index].isPieceAllocated() === false)
+            {
+                allPiecesAllocated = false;
+                break;
+            }
+        }
+        
+        return allPiecesAllocated;
+    };
 };
 
 

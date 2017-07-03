@@ -85,7 +85,6 @@ function Desktop()
 
             if (this.isLevelFinished() === true)
             {
-                console.log("finished");
                 this.m_levelSelector.setConfirmationMode();       
                 this.m_state = Desktop.C_STATE_NEXT_LEVEL_CONFIRMATION;       
             }

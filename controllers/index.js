@@ -34,5 +34,8 @@ module.exports = function(app)
 	app.get ('/controllers/entities/levelSelector.js', 
 		function (req, res) {res.sendFile(__dirname + '/entities/levelSelector.js');});
 
+	app.get ('/controllers/entities/levelFactory.js', 
+		function (req, res) {res.sendFile(__dirname + '/entities/levelFactory.js');});
+
 	console.log("   controllers/index.js: OK");
 }

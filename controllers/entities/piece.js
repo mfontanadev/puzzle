@@ -2,6 +2,8 @@ Piece.C_ALLOCATION_TOLERANCE = 20;  // in pixels.
 
 function Piece () 
 { 
+    this.m_viewParent = null;
+
     this.m_bitmap = null;
     this.m_rectThumbail = null;
     this.m_xTarget = 0;
@@ -11,8 +13,7 @@ function Piece ()
     this.m_y = 0;
     this.m_rc = new ChRect();
     this.m_mouseOver = false;
-    this.m_viewParent = null;
-    this.m_avoidRecursivity = false;
+    this.m_avoidSoundRecursivity = false;
 
     Piece.prototype.init = function (_viewParent, _pieceImage, _xTarget, _yTarget) 
     {
@@ -48,17 +49,17 @@ function Piece ()
             {
                 this.updateMouseOverPosition(this.m_xTarget, this.m_yTarget);
              
-                if (this.m_avoidRecursivity === false)
+                if (this.m_avoidSoundRecursivity === false)
                 {
                     this.m_viewParent.getSoundManagerInstance().playSoundByName("allocated.wav");
 
-                    this.m_avoidRecursivity = true;
+                    this.m_avoidSoundRecursivity = true;
                 }
             }
             else
             {
                 this.updateMouseOverPosition(_cx, _cy);
-                this.m_avoidRecursivity = false;
+                this.m_avoidSoundRecursivity = false;
             }
         }
     }

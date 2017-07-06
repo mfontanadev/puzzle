@@ -16,6 +16,8 @@ function PuzzleContext()
 		this.m_viewParent = null;
 	
 		this.m_desktop = null;
+
+		this.m_levelSelector = null;
 	};
 		
 	PuzzleContext.prototype.initialize = function (_parentView)
@@ -29,6 +31,10 @@ function PuzzleContext()
 
 		this.m_desktop = new Desktop();
 		this.m_desktop.init(this.m_viewParent);
+
+		this.m_levelSelector = new LevelSelector();
+        this.m_levelSelector.init(this.m_viewParent, Desktop.C_PLAY_PANEL_WIDTH);
+        //this.m_levelSelector.registerDesktop(this.m_desktop);  
 	};
 
 	PuzzleContext.prototype.createActivities = function ()

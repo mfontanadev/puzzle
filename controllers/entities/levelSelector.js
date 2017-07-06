@@ -1,3 +1,6 @@
+LevelSelector.C_LEVEL_SELECTOR_WIDTH = 180;
+LevelSelector.C_LEVEL_SELECTOR_HEIGHT = 60;
+
 function LevelSelector() 
 {
     this.m_viewParent = null;
@@ -14,30 +17,29 @@ function LevelSelector()
     this.m_btnNextLevel = null;
     this.m_btnBack = null;
     
-    this.m_parentDesktop = null;
+    this.m_observer = null;
+    this.m_confirmationMode = false;
 
-    LevelSelector.prototype.init = function (_viewParent, _x1, _y1, _width, _height, _parentDesktop) 
+    LevelSelector.prototype.init = function (_viewParent, _parentSize) 
     {
         this.m_viewParent = _viewParent;
 
-        this.m_x1 = _x1;
-        this.m_y1 = _y1;
-        this.m_width = _width;
-        this.m_height = _height;
+        this.m_x1 = (_parentSize / 2) + 15;
+        this.m_y1 = _parentSize / 2;
+        this.m_width = LevelSelector.C_LEVEL_SELECTOR_WIDTH;;
+        this.m_height = LevelSelector.C_LEVEL_SELECTOR_HEIGHT;
 
         this.m_backgroundBitmap = this.m_viewParent.getBitmapManagerInstance().getImageByName("toolbar_background.png");
 
-        this.m_parentDesktop = _parentDesktop;
-
-        var middleW = _width / 2;
+        var middleW = this.m_width / 2;
         this.m_btnPreviousLevel = new CanvasControl();
         this.m_btnPreviousLevel.initButtonStyle(this.m_viewParent.m_canvasEx, 
                                 this.m_x1 -middleW + 20, this.m_y1 - 20, 30, 30, "");
         this.m_btnPreviousLevel.setImage("left_up.png") ;
         this.m_btnPreviousLevel.setImageDown("left_down.png");
         this.m_btnPreviousLevel.registerOnClick(this, this.btnPreviousLevel_click_controller);
-        this.m_btnPreviousLevel.setEnabled(true);
-        this.m_btnPreviousLevel.setVisible(true);
+        this.m_btnPreviousLevel.setEnabled(false);
+        this.m_btnPreviousLevel.setVisible(false);
 
         this.m_btnNextLevel = new CanvasControl();
         this.m_btnNextLevel.initButtonStyle(this.m_viewParent.m_canvasEx, 
@@ -45,8 +47,8 @@ function LevelSelector()
         this.m_btnNextLevel.setImage("right_up.png") ;
         this.m_btnNextLevel.setImageDown("right_down.png");
         this.m_btnNextLevel.registerOnClick(this, this.btnNextLevel_click_controller);
-        this.m_btnNextLevel.setEnabled(true);
-        this.m_btnNextLevel.setVisible(true);
+        this.m_btnNextLevel.setEnabled(false);
+        this.m_btnNextLevel.setVisible(false);
 
         this.m_btnBack = new CanvasControl();
         this.m_btnBack.initButtonStyle(this.m_viewParent.m_canvasEx, 
@@ -54,8 +56,8 @@ function LevelSelector()
         this.m_btnBack.setImage("toolbar_close_up.png") ;
         this.m_btnBack.setImageDown("toolbar_close_down.png");
         this.m_btnBack.registerOnClick(this, this.btnBack_click_controller);
-        this.m_btnBack.setEnabled(true);
-        this.m_btnBack.setVisible(true);
+        this.m_btnBack.setEnabled(false);
+        this.m_btnBack.setVisible(false);
     };
 
     // ****************************************
@@ -101,8 +103,6 @@ function LevelSelector()
 
         this.m_btnBack.setEnabled(true);
         this.m_btnBack.setVisible(true);
-
-        this.m_parentDesktop.hideLevelSelectorIcon();
     }; 
 
     LevelSelector.prototype.hide = function () 
@@ -117,30 +117,72 @@ function LevelSelector()
 
         this.m_btnBack.setEnabled(false);
         this.m_btnBack.setVisible(false);
-
-        this.m_parentDesktop.showLevelSelectorIcon();        
     }; 
 
+    LevelSelector.prototype.back = function () 
+    {
+        if (this.m_confirmationMode === false)
+        {
+            this.hide();
+            this.notify(PlayFlow.C_EVENT_ON_LEVEL_SELECTOR_BACK);
+        }
+        else
+        {
+            this.m_confirmationMode = false;
+            this.hide();
+            this.notify(PlayFlow.C_EVENT_ON_LEVEL_SELECTOR_NEXT_LEVEL);
+            this.notify(PlayFlow.C_EVENT_ON_LEVEL_SELECTOR_BACK);
+        }
+    }; 
 
     LevelSelector.prototype.btnPreviousLevel_click_controller = function (_event, _sender) 
     {
-        _sender.getOnClickParent().m_parentDesktop.previousLevel();
+        _sender.getOnClickParent().notify(PlayFlow.C_EVENT_ON_LEVEL_SELECTOR_PREVIOUS_LEVEL);
     }; 
 
     LevelSelector.prototype.btnNextLevel_click_controller = function (_event, _sender) 
     {
-        _sender.getOnClickParent().m_parentDesktop.nextLevel();
+        _sender.getOnClickParent().notify(PlayFlow.C_EVENT_ON_LEVEL_SELECTOR_NEXT_LEVEL);
     }; 
 
     LevelSelector.prototype.btnBack_click_controller = function (_event, _sender) 
     {
-        _sender.getOnClickParent().hide();
+        _sender.getOnClickParent().back();
     }; 
 
     LevelSelector.prototype.isVisible = function () 
     {
         return this.m_visible === true;
     }; 
+
+    LevelSelector.prototype.setConfirmationMode = function () 
+    {
+        this.m_confirmationMode = true;
+
+        this.m_visible = true;
+
+        this.m_btnPreviousLevel.setEnabled(false);
+        this.m_btnPreviousLevel.setVisible(false);
+
+        this.m_btnNextLevel.setEnabled(false);
+        this.m_btnNextLevel.setVisible(false);
+
+        this.m_btnBack.setEnabled(true);
+        this.m_btnBack.setVisible(true);
+    };
+    
+    LevelSelector.prototype.registerObserver = function (_observer) 
+    {
+        this.m_observer = _observer;
+    }    
+
+    LevelSelector.prototype.notify = function (_event) 
+    {
+        if (this.m_observer !== null)
+        {
+            this.m_observer.onNotify(this, _event);
+        }
+    }
 
 };
 

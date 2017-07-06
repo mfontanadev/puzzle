@@ -32,7 +32,7 @@ PuzzlePlayActivity.prototype.createControls = function ()
 
 PuzzlePlayActivity.prototype.onEnterActivity = function ()
 {
-	this.m_flow.setState(PlayFlow.C_PLAY_FLOW_APPSTATE_INITIALIZING);
+	this.m_flow.setState(PlayFlow.C_PLAY_FLOW_APPSTATE_PLAYING);
 };
 
 PuzzlePlayActivity.prototype.handleInputs = function ()

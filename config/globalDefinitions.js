@@ -1,6 +1,7 @@
 // All sounds used by de app. SoundManager will preload all of them.
 var global_sound_definition = [
-    {src:"allocated.wav", id:0}
+    {src:"allocated.wav", id:0},
+    {src:"level_finished.wav", id:1}
 ];
 
 // All bitmaps used by de app. ResourceManager will preload all of them.
@@ -13,10 +14,8 @@ var global_bitmap_definition =
     'puzzles\\02\\puzzle_peppa2_background.png',
     'puzzles\\02\\puzzle_peppa2_clip-1.png',
     'puzzles\\02\\puzzle_peppa2_clip-2.png',
-
-    'puzzles\\03\\puzzle_peppa3_background.png',
-    'puzzles\\03\\puzzle_peppa3_clip-1.png',
-    'puzzles\\03\\puzzle_peppa3_clip-2.png',
+    'puzzles\\02\\puzzle_peppa2_clip-3.png',
+    'puzzles\\02\\puzzle_peppa2_clip-4.png',
 
     'desktop_theme1.png',
 
@@ -39,7 +38,7 @@ function MainLoopState()
 { 
 }
 
-Globals.C_APPLICATION_TITLE_AND_VERSION = 'Puzzle v1.2.0';
+Globals.C_APPLICATION_TITLE_AND_VERSION = 'Puzzle v1.3.0';
 function Globals() 
 { 
     this.m_mainLoopState = new MainLoopState(); 

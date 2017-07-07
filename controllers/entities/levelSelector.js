@@ -31,10 +31,10 @@ function LevelSelector()
 
         this.m_backgroundBitmap = this.m_viewParent.getBitmapManagerInstance().getImageByName("toolbar_background.png");
 
-        var middleW = this.m_width / 2;
+        var middleW = (this.m_width / 2);
         this.m_btnPreviousLevel = new CanvasControl();
         this.m_btnPreviousLevel.initButtonStyle(this.m_viewParent.m_canvasEx, 
-                                this.m_x1 -middleW + 20, this.m_y1 - 20, 30, 30, "");
+                                this.m_x1 -middleW + 20, this.m_y1 - getCenter(this.m_height, 30), 30, 30, "");
         this.m_btnPreviousLevel.setImage("left_up.png") ;
         this.m_btnPreviousLevel.setImageDown("left_down.png");
         this.m_btnPreviousLevel.registerOnClick(this, this.btnPreviousLevel_click_controller);
@@ -43,7 +43,7 @@ function LevelSelector()
 
         this.m_btnNextLevel = new CanvasControl();
         this.m_btnNextLevel.initButtonStyle(this.m_viewParent.m_canvasEx, 
-                                this.m_x1 + middleW - 30 - 20, this.m_y1 - 20, 30, 30, "");
+                                this.m_x1 + middleW - 30 - 20, this.m_y1 - getCenter(this.m_height, 30), 30, 30, "");
         this.m_btnNextLevel.setImage("right_up.png") ;
         this.m_btnNextLevel.setImageDown("right_down.png");
         this.m_btnNextLevel.registerOnClick(this, this.btnNextLevel_click_controller);
@@ -52,9 +52,9 @@ function LevelSelector()
 
         this.m_btnBack = new CanvasControl();
         this.m_btnBack.initButtonStyle(this.m_viewParent.m_canvasEx, 
-                                this.m_x1 - 15, this.m_y1 - 8, 30, 30, "");
-        this.m_btnBack.setImage("toolbar_close_up.png") ;
-        this.m_btnBack.setImageDown("toolbar_close_down.png");
+                                this.m_x1 - 15, this.m_y1 - getCenter(this.m_height, 30), 30, 30, "");
+        this.m_btnBack.setImage("ok_up.png") ;
+        this.m_btnBack.setImageDown("ok_down.png");
         this.m_btnBack.registerOnClick(this, this.btnBack_click_controller);
         this.m_btnBack.setEnabled(false);
         this.m_btnBack.setVisible(false);

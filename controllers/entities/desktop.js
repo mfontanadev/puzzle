@@ -38,11 +38,11 @@ function Desktop()
         this.m_desktopBitmap = this.m_viewParent.getBitmapManagerInstance().getImageByName('desktop_theme1.png');
 
         // Open/Close level selector button.   
-        var toolbarCenterX = Desktop.C_PLAY_PANEL_WIDTH / 2;
+        var toolbarCenterX = (Desktop.C_PLAY_PANEL_WIDTH / 2) + 15;
         var toolbarCenterY = Desktop.C_PLAY_PANEL_WIDTH;
         this.m_btnLevelSelector = new CanvasControl();
         this.m_btnLevelSelector.initButtonStyle(this.m_viewParent.m_canvasEx, 
-                                toolbarCenterX - 7 + 15, toolbarCenterY - 15, 30, 30, "");
+                                toolbarCenterX - 15, toolbarCenterY - 15, 30, 30, "");
         this.m_btnLevelSelector.setImage("toolbar_open_up.png");
         this.m_btnLevelSelector.setImageDown("toolbar_open_down.png");
         this.m_btnLevelSelector.registerOnClick(this, this.btnLevelSelector_click_controller);

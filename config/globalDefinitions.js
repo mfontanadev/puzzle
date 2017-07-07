@@ -19,8 +19,10 @@ var global_bitmap_definition =
 
     'desktop_theme1.png',
 
-    'toolbar_close_up.png',
-    'toolbar_close_down.png',
+    'ok_up.png',
+    'ok_down.png',
+    'back_up.png',
+    'back_down.png',
     'toolbar_open_up.png',
     'toolbar_open_down.png',
     'toolbar_background.png',

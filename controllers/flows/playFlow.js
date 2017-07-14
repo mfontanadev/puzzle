@@ -91,7 +91,7 @@ function PlayFlow()
         }
         else if (_event === PlayFlow.C_EVENT_ON_FINISH_LEVEL)
         {
-            this.m_levelSelector.setConfirmationMode();
+            this.m_levelSelector.setLevelFinished();
             this.setState(PlayFlow.C_PLAY_FLOW_APPSTATE_NEXT_LEVEL_CONFIRMATION);
         }
     };

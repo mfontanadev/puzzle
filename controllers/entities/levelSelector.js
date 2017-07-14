@@ -1,5 +1,6 @@
 LevelSelector.C_LEVEL_SELECTOR_WIDTH = 180;
 LevelSelector.C_LEVEL_SELECTOR_HEIGHT = 60;
+LevelSelector.C_LEVEL_FINISHED_DELAY_SECONDS = 3;       
 
 function LevelSelector() 
 {
@@ -8,6 +9,7 @@ function LevelSelector()
     this.m_visible = false;
 
     this.m_backgroundBitmap = null;
+    this.m_levelFinishedBitmap = null;
     this.m_x1 = 0;
     this.m_y1 = 0;
     this.m_width = 0;
@@ -19,6 +21,8 @@ function LevelSelector()
     
     this.m_observer = null;
     this.m_confirmationMode = false;
+    this.m_levelFinished = false;
+    this.m_levelFinishedStartTimer = 0;
 
     LevelSelector.prototype.init = function (_viewParent, _parentSize) 
     {
@@ -30,6 +34,7 @@ function LevelSelector()
         this.m_height = LevelSelector.C_LEVEL_SELECTOR_HEIGHT;
 
         this.m_backgroundBitmap = this.m_viewParent.getBitmapManagerInstance().getImageByName("toolbar_background.png");
+        this.m_levelFinishedBitmap = this.m_viewParent.getBitmapManagerInstance().getImageByName("level_finished.png");
 
         var middleW = (this.m_width / 2);
         this.m_btnPreviousLevel = new CanvasControl();
@@ -69,6 +74,14 @@ function LevelSelector()
 
     LevelSelector.prototype.implementGameLogic = function () 
     {
+        if (this.m_levelFinished === true)
+        {
+            console.log("ff");
+            if (Date.now() - this.m_levelFinishedStartTimer > (LevelSelector.C_LEVEL_FINISHED_DELAY_SECONDS * 1000))
+            {
+                this.back();
+            }
+        }
     };
 
     LevelSelector.prototype.render = function () 
@@ -82,9 +95,19 @@ function LevelSelector()
                             this.m_x1, this.m_y1,
                             0,1,1);
         
+            if (this.m_levelFinished === true)
+            {
+                drawImageRotationTransparentScaled( 
+                                this.m_viewParent.m_canvasEx.m_canvas, 
+                                this.m_viewParent.m_canvasEx.m_context, 
+                                this.m_levelFinishedBitmap, 
+                                this.m_x1, this.m_y1,
+                                0,1,1);                
+            }
+
             this.m_btnPreviousLevel.render();
             this.m_btnNextLevel.render();
-            this.m_btnBack.render();
+            this.m_btnBack.render();            
         }
     };
 
@@ -121,14 +144,15 @@ function LevelSelector()
 
     LevelSelector.prototype.back = function () 
     {
-        if (this.m_confirmationMode === false)
+        if (this.m_confirmationMode === false && this.m_levelFinished === false)
         {
             this.hide();
             this.notify(PlayFlow.C_EVENT_ON_LEVEL_SELECTOR_BACK);
         }
-        else
+        else if (this.m_confirmationMode === true || this.m_levelFinished === true)
         {
             this.m_confirmationMode = false;
+            this.m_levelFinished = false;
             this.hide();
             this.notify(PlayFlow.C_EVENT_ON_LEVEL_SELECTOR_NEXT_LEVEL);
             this.notify(PlayFlow.C_EVENT_ON_LEVEL_SELECTOR_BACK);
@@ -169,8 +193,28 @@ function LevelSelector()
 
         this.m_btnBack.setEnabled(true);
         this.m_btnBack.setVisible(true);
+
+
     };
-    
+
+    LevelSelector.prototype.setLevelFinished = function () 
+    {
+        this.m_levelFinished = true;
+
+        this.m_visible = true;
+
+        this.m_btnPreviousLevel.setEnabled(false);
+        this.m_btnPreviousLevel.setVisible(false);
+
+        this.m_btnNextLevel.setEnabled(false);
+        this.m_btnNextLevel.setVisible(false);
+
+        this.m_btnBack.setEnabled(false);
+        this.m_btnBack.setVisible(false);
+
+        this.m_levelFinishedStartTimer = Date.now();
+    };
+
     LevelSelector.prototype.registerObserver = function (_observer) 
     {
         this.m_observer = _observer;

@@ -26,6 +26,7 @@ var global_bitmap_definition =
     'toolbar_open_up.png',
     'toolbar_open_down.png',
     'toolbar_background.png',
+    'level_finished.png',
     'left_up.png',
     'left_down.png',
     'right_up.png',
@@ -40,7 +41,7 @@ function MainLoopState()
 { 
 }
 
-Globals.C_APPLICATION_TITLE_AND_VERSION = 'Puzzle v1.3.0';
+Globals.C_APPLICATION_TITLE_AND_VERSION = 'Puzzle v1.3.1';
 function Globals() 
 { 
     this.m_mainLoopState = new MainLoopState(); 

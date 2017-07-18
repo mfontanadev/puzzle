@@ -24,22 +24,23 @@ function LevelSelector()
     this.m_levelFinished = false;
     this.m_levelFinishedStartTimer = 0;
 
-    LevelSelector.prototype.init = function (_viewParent, _parentSize) 
+    LevelSelector.prototype.init = function (_viewParent) 
     {
         this.m_viewParent = _viewParent;
 
-        this.m_x1 = (_parentSize / 2) + 15;
-        this.m_y1 = _parentSize / 2;
+        this.m_x1 = this.m_viewParent.m_canvasEx.m_canvas.width / 2;
+        this.m_y1 = this.m_viewParent.m_canvasEx.m_canvas.height / 2;
         this.m_width = LevelSelector.C_LEVEL_SELECTOR_WIDTH;;
         this.m_height = LevelSelector.C_LEVEL_SELECTOR_HEIGHT;
 
         this.m_backgroundBitmap = this.m_viewParent.getBitmapManagerInstance().getImageByName("toolbar_background.png");
         this.m_levelFinishedBitmap = this.m_viewParent.getBitmapManagerInstance().getImageByName("level_finished.png");
 
-        var middleW = (this.m_width / 2);
+        var middleW = Desktop.C_PLAY_PANEL_WIDTH + ((this.m_viewParent.m_canvasEx.m_canvas.width - Desktop.C_PLAY_PANEL_WIDTH) / 2);
+        var middleH = Desktop.C_PLAY_PANEL_WIDTH - 10;
         this.m_btnPreviousLevel = new CanvasControl();
         this.m_btnPreviousLevel.initButtonStyle(this.m_viewParent.m_canvasEx, 
-                                this.m_x1 -middleW + 20, this.m_y1 - getCenter(this.m_height, 30), 30, 30, "");
+                                middleW - 30 - 30, middleH - 15, 30, 30, "");
         this.m_btnPreviousLevel.setImage("left_up.png") ;
         this.m_btnPreviousLevel.setImageDown("left_down.png");
         this.m_btnPreviousLevel.registerOnClick(this, this.btnPreviousLevel_click_controller);
@@ -48,7 +49,7 @@ function LevelSelector()
 
         this.m_btnNextLevel = new CanvasControl();
         this.m_btnNextLevel.initButtonStyle(this.m_viewParent.m_canvasEx, 
-                                this.m_x1 + middleW - 30 - 20, this.m_y1 - getCenter(this.m_height, 30), 30, 30, "");
+                                middleW + 30, middleH - 15, 30, 30, "");
         this.m_btnNextLevel.setImage("right_up.png") ;
         this.m_btnNextLevel.setImageDown("right_down.png");
         this.m_btnNextLevel.registerOnClick(this, this.btnNextLevel_click_controller);
@@ -57,7 +58,7 @@ function LevelSelector()
 
         this.m_btnBack = new CanvasControl();
         this.m_btnBack.initButtonStyle(this.m_viewParent.m_canvasEx, 
-                                this.m_x1 - 15, this.m_y1 - getCenter(this.m_height, 30), 30, 30, "");
+                                middleW - 15, middleH - 15, 30, 30, "");
         this.m_btnBack.setImage("ok_up.png") ;
         this.m_btnBack.setImageDown("ok_down.png");
         this.m_btnBack.registerOnClick(this, this.btnBack_click_controller);
@@ -76,7 +77,6 @@ function LevelSelector()
     {
         if (this.m_levelFinished === true)
         {
-            console.log("ff");
             if (Date.now() - this.m_levelFinishedStartTimer > (LevelSelector.C_LEVEL_FINISHED_DELAY_SECONDS * 1000))
             {
                 this.back();
@@ -88,15 +88,15 @@ function LevelSelector()
     {
         if (this.m_visible === true)
         {
-            drawImageRotationTransparentScaled( 
+            if (this.m_levelFinished === true)
+            {
+                drawImageRotationTransparentScaled( 
                             this.m_viewParent.m_canvasEx.m_canvas, 
                             this.m_viewParent.m_canvasEx.m_context, 
                             this.m_backgroundBitmap, 
                             this.m_x1, this.m_y1,
                             0,1,1);
-        
-            if (this.m_levelFinished === true)
-            {
+
                 drawImageRotationTransparentScaled( 
                                 this.m_viewParent.m_canvasEx.m_canvas, 
                                 this.m_viewParent.m_canvasEx.m_context, 

@@ -33,7 +33,7 @@ function PuzzleContext()
 		this.m_desktop.init(this.m_viewParent);
 
 		this.m_levelSelector = new LevelSelector();
-        this.m_levelSelector.init(this.m_viewParent, Desktop.C_PLAY_PANEL_WIDTH);
+        this.m_levelSelector.init(this.m_viewParent);
 	};
 
 	PuzzleContext.prototype.createActivities = function ()

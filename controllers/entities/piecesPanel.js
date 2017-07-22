@@ -30,7 +30,7 @@ function PiecesPanel()
     PiecesPanel.prototype.initThumbialArray = function () 
     {
         var colWidth = (this.m_width + 10 - PiecesPanel.C_COLS) / PiecesPanel.C_COLS;
-        var rowHeight = (this.m_height + 10 - PiecesPanel.C_ROWS) / PiecesPanel.C_ROWS;
+        var rowHeight = (this.m_height - 65 - PiecesPanel.C_ROWS) / PiecesPanel.C_ROWS;
         var thumbailItem = null;
 
         for (var y = 0; y < PiecesPanel.C_ROWS; y++) 

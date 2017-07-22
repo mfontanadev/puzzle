@@ -16,6 +16,8 @@ function Desktop()
 
     this.m_observer = null;
 
+    this.m_enabled = true;
+
     Desktop.prototype.init = function (_viewParent) 
     {
         this.m_viewParent = _viewParent;
@@ -27,7 +29,7 @@ function Desktop()
 
         this.m_piecesPanel = new PiecesPanel();
         this.m_piecesPanel.init(this.m_viewParent, 
-                                    Desktop.C_PLAY_PANEL_WIDTH + 20, 10, 
+                                    Desktop.C_PLAY_PANEL_WIDTH + 18, 10, 
                                     Desktop.C_PIECES_PANEL_WIDTH, Desktop.C_PLAY_PANEL_WIDTH);
 
         this.m_levelFactory = new LevelFactory();
@@ -38,8 +40,8 @@ function Desktop()
         this.m_desktopBitmap = this.m_viewParent.getBitmapManagerInstance().getImageByName('desktop_theme1.png');
 
         // Open/Close level selector button.   
-        var toolbarCenterX = (Desktop.C_PLAY_PANEL_WIDTH / 2) + 15;
-        var toolbarCenterY = Desktop.C_PLAY_PANEL_WIDTH;
+        var toolbarCenterX = Desktop.C_PLAY_PANEL_WIDTH + ((this.m_viewParent.m_canvasEx.m_canvas.width - Desktop.C_PLAY_PANEL_WIDTH) / 2);
+        var toolbarCenterY = Desktop.C_PLAY_PANEL_WIDTH - 10;
         this.m_btnLevelSelector = new CanvasControl();
         this.m_btnLevelSelector.initButtonStyle(this.m_viewParent.m_canvasEx, 
                                 toolbarCenterX - 15, toolbarCenterY - 15, 30, 30, "");
@@ -81,11 +83,22 @@ function Desktop()
 
         this.renderPieces() 
 
+        if (this.m_enabled === false)
+        {
+            renderRectangleFilled(
+                    this.m_viewParent.m_canvasEx.m_canvas, 
+                    this.m_viewParent.m_canvasEx.m_context, 
+                    10, 10, this.m_viewParent.m_canvasEx.m_canvas.width - 20, this.m_viewParent.m_canvasEx.m_canvas.height - 20,
+                    rgbaToColor(0,0,0, 0.50));
+        }
+
         drawImageTransparent( 
             this.m_viewParent.m_canvasEx.m_canvas, 
             this.m_viewParent.m_canvasEx.m_context, 
             this.m_desktopBitmap, 
             0, 0, 1);
+
+
 
         this.m_btnLevelSelector.render();
 
@@ -218,6 +231,11 @@ function Desktop()
     Desktop.prototype.registerObserver = function (_observer) 
     {
         this.m_observer = _observer;
+    }    
+
+    Desktop.prototype.setEnabled = function (_value) 
+    {
+        this.m_enabled = _value;
     }    
 
     Desktop.prototype.notify = function (_event) 

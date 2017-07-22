@@ -51,16 +51,6 @@ function PlayFlow()
     PlayFlow.prototype.render = function () 
     {
         this.m_desktop.render();
-
-        if (this.m_state !== PlayFlow.C_PLAY_FLOW_APPSTATE_PLAYING)
-        {
-            renderRectangleFilled(
-                this.m_viewParent.m_canvasEx.m_canvas, 
-                this.m_viewParent.m_canvasEx.m_context, 
-                0, 0, this.m_viewParent.m_canvasEx.m_canvas.width, this.m_viewParent.m_canvasEx.m_canvas.height,
-                rgbaToColor(0,0,0, 0.5));
-        }
-
         this.m_levelSelector.render();
     };
 
@@ -73,11 +63,13 @@ function PlayFlow()
     {
         if (_event === PlayFlow.C_EVENT_ON_LEVEL_SELECTOR_CLIC)
         {
+            this.m_desktop.setEnabled(false);
             this.m_levelSelector.show();    
             this.setState(PlayFlow.C_PLAY_FLOW_APPSTATE_SELECTING_LEVELS);
         }
         else if (_event === PlayFlow.C_EVENT_ON_LEVEL_SELECTOR_BACK)
         {
+            this.m_desktop.setEnabled(true);
             this.m_desktop.showLevelSelectorIcon();    
             this.setState(PlayFlow.C_PLAY_FLOW_APPSTATE_PLAYING);
         }
@@ -91,6 +83,7 @@ function PlayFlow()
         }
         else if (_event === PlayFlow.C_EVENT_ON_FINISH_LEVEL)
         {
+            this.m_desktop.setEnabled(false);
             this.m_levelSelector.setLevelFinished();
             this.setState(PlayFlow.C_PLAY_FLOW_APPSTATE_NEXT_LEVEL_CONFIRMATION);
         }

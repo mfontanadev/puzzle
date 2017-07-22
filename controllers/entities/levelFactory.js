@@ -1,4 +1,4 @@
-LevelFactory.C_LEVELS_COUNT = 2;
+LevelFactory.C_LEVELS_COUNT = 3;
 
 function LevelFactory () 
 { 
@@ -14,7 +14,6 @@ function LevelFactory ()
     LevelFactory.prototype.loadLevel = function (_levelNumber, _playPanel, _piecesPanel) 
     {
         chClearArray(this.m_pieces);
-
         if (_levelNumber === 0)
         {
             this.addPiece("puzzle_peppa_clip-1.png", 290, 324);
@@ -28,6 +27,14 @@ function LevelFactory ()
             this.addPiece("puzzle_peppa2_clip-3.png", 345, 220);
             this.addPiece("puzzle_peppa2_clip-4.png", 194, 390);
             _playPanel.setBackgroundImage('puzzle_peppa2_background.png');
+        }
+        else if (_levelNumber === 2)
+        {
+            this.addPiece("puzzle_peppa3_clip-1.png", 203, 283);
+            this.addPiece("puzzle_peppa3_clip-2.png", 359, 399);
+            this.addPiece("puzzle_peppa3_clip-3.png", 87, 401);
+            this.addPiece("puzzle_peppa3_clip-4.png", 91, 264);
+            _playPanel.setBackgroundImage('puzzle_peppa3_background.png');
         }
 
        _piecesPanel.initPiecesWithThumbails(this.m_pieces);

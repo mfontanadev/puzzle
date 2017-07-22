@@ -17,6 +17,12 @@ var global_bitmap_definition =
     'puzzles\\02\\puzzle_peppa2_clip-3.png',
     'puzzles\\02\\puzzle_peppa2_clip-4.png',
 
+    'puzzles\\03\\puzzle_peppa3_background.png',
+    'puzzles\\03\\puzzle_peppa3_clip-1.png',
+    'puzzles\\03\\puzzle_peppa3_clip-2.png',
+    'puzzles\\03\\puzzle_peppa3_clip-3.png',
+    'puzzles\\03\\puzzle_peppa3_clip-4.png',
+
     'desktop_theme1.png',
 
     'ok_up.png',

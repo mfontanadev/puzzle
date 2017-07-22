@@ -98,8 +98,6 @@ function Desktop()
             this.m_desktopBitmap, 
             0, 0, 1);
 
-
-
         this.m_btnLevelSelector.render();
 
         this.renderSelectedPiece() 

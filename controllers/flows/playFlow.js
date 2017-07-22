@@ -75,11 +75,11 @@ function PlayFlow()
         }
         else if (_event === PlayFlow.C_EVENT_ON_LEVEL_SELECTOR_PREVIOUS_LEVEL)
         {
-            this.m_desktop.nextLevel();    
+            this.m_desktop.previousLevel();    
         }
         else if (_event === PlayFlow.C_EVENT_ON_LEVEL_SELECTOR_NEXT_LEVEL)
         {
-            this.m_desktop.previousLevel();    
+            this.m_desktop.nextLevel();    
         }
         else if (_event === PlayFlow.C_EVENT_ON_FINISH_LEVEL)
         {

@@ -34,7 +34,7 @@ function LevelSelector()
         this.m_height = LevelSelector.C_LEVEL_SELECTOR_HEIGHT;
 
         this.m_backgroundBitmap = this.m_viewParent.getBitmapManagerInstance().getImageByName("toolbar_background.png");
-        this.m_levelFinishedBitmap = this.m_viewParent.getBitmapManagerInstance().getImageByName("level_finished.png");
+        this.m_levelFinishedBitmap = this.m_viewParent.getBitmapManagerInstance().getImageByName("level_finished_eng.png");
 
         var middleW = (this.m_width / 2);
         this.m_btnPreviousLevel = new CanvasControl();

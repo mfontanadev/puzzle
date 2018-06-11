@@ -10,8 +10,9 @@ window.onload = function()
 	// Create main view helper.
 	viewMngr = new ViewManager(document, window);
 	viewMngr.initCanvasById('idCanvas', false);
+	viewMngr.setBackground("background_green.jpg");
 	viewMngr.enableProgressBarWhenLoadingResources();
-
+	
 	// Enable using bitmaps
 	var bitmapManager = viewMngr.getBitmapManagerInstance();
 	bitmapManager.setProgressBar(viewMngr.getProgressBar());

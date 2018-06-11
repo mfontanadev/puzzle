@@ -37,7 +37,8 @@ var global_bitmap_definition =
     'left_up.png',
     'left_down.png',
     'right_up.png',
-    'right_down.png'
+    'right_down.png',
+    'background_green.jpg'
 ];
 
 // Definition of states for the machine of finite states used in app main loop. 

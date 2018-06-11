@@ -12,6 +12,7 @@
  				image, canvas {
  					position: fixed;
 				    user-select: none;
+					z-index: -1;
 				    -ms-user-select: none;
 				    -webkit-user-select: none;
 				    -khtml-user-select: none;
@@ -54,7 +55,9 @@
 			<script src="../controllers/puzzleController.js"></script>
 		</head>
 
-		<body background="background_green.jpg">
+		<!--<body background="background_green.jpg">-->
+		<body>
+			<canvas id="idCanvasBack" style="solid #FF0000;"></canvas>
 			<canvas id="idCanvas" width="640" height="480" style="solid #FF0000;"></canvas>
 		</body>
 	</html>

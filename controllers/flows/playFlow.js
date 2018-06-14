@@ -71,7 +71,7 @@ function PlayFlow()
         {
             this.m_desktop.setEnabled(true);
             this.m_desktop.showLevelSelectorIcon();    
-            this.setEnabledtState(PlayFlow.C_PLAY_FLOW_APPSTATE_PLAYING);
+            this.setState(PlayFlow.C_PLAY_FLOW_APPSTATE_PLAYING);
         }
         else if (_event === PlayFlow.C_EVENT_ON_LEVEL_SELECTOR_PREVIOUS_LEVEL)
         {

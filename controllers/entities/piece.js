@@ -41,7 +41,7 @@ function Piece ()
         }
         else
         {
-		    // console.log(_cx, ",", _cy);	// Uncomment when editing levels.
+		    console.log(_cx, ",", _cy);	// Uncomment when editing levels.
             if (this.isOverTarget(_cx, _cy) === true)
             {
                 this.updateMouseOverPosition(this.m_xTarget, this.m_yTarget);

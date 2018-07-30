@@ -55,8 +55,8 @@ function LevelSelectorPanel()
                                 viewMngr.getWidth() / 2 - 15, 
                                 viewMngr.getHeight() - 60, 
                                 30, 30, "");
-        this.m_btnBack.setImage("back_up.png") ;
-        this.m_btnBack.setImageDown("back_down.png");
+        this.m_btnBack.setImage("home_up.png") ;
+        this.m_btnBack.setImageDown("home_down.png");
         this.m_btnBack.registerOnClick(this, this.btnBack_click_controller);
 
         // hardcoded for testing.
@@ -113,7 +113,11 @@ function LevelSelectorPanel()
         this.m_levelThumbails.push(levelThumbail);
 
         levelThumbail = new LevelThumbail();
-        levelThumbail.init(4, "puzzle_peppa4_background.png");
+        levelThumbail.init(3, "puzzle_peppa4_background.png");
+        this.m_levelThumbails.push(levelThumbail);
+
+        levelThumbail = new LevelThumbail();
+        levelThumbail.init(4, "puzzle_peppa5_background.png");
         this.m_levelThumbails.push(levelThumbail);
     }
 

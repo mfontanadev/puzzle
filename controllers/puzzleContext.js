@@ -38,7 +38,7 @@ function PuzzleContext()
 									viewMngr.getHeight()
 		);
 
-		this.m_levels_count = 4;
+		this.m_levels_count = 5;
 	};
 
 	PuzzleContext.prototype.createActivities = function ()

@@ -29,7 +29,13 @@ var global_bitmap_definition =
     'puzzles\\04\\puzzle_peppa4_clip-3.png',
     'puzzles\\04\\puzzle_peppa4_clip-4.png',
     'puzzles\\04\\puzzle_peppa4_clip-5.png',
-    
+
+    'puzzles\\05\\puzzle_peppa5_background.png',
+    'puzzles\\05\\puzzle_peppa5_clip-1.png',
+    'puzzles\\05\\puzzle_peppa5_clip-2.png',
+    'puzzles\\05\\puzzle_peppa5_clip-3.png',
+    'puzzles\\05\\puzzle_peppa5_clip-4.png',
+
     'desktop_screen.png',
     'main_screen.png',
 
@@ -73,7 +79,7 @@ function MainLoopState()
 { 
 }
 
-Globals.C_APPLICATION_TITLE_AND_VERSION = 'Puzzle v1.4.2';
+Globals.C_APPLICATION_TITLE_AND_VERSION = 'Puzzle v1.4.3';
 function Globals() 
 { 
     this.m_mainLoopState = new MainLoopState(); 

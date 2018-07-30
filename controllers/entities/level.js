@@ -34,12 +34,20 @@ function Level ()
         }
         else if (_levelNumber === 3)
         {
-            this.addPiece("puzzle_peppa4_clip-1.png", 307, 145);
-            this.addPiece("puzzle_peppa4_clip-2.png", 418, 91);
+            this.addPiece("puzzle_peppa4_clip-1.png", 212, 340);
+            this.addPiece("puzzle_peppa4_clip-2.png", 84, 91);
             this.addPiece("puzzle_peppa4_clip-3.png", 152, 313);
             this.addPiece("puzzle_peppa4_clip-4.png", 230, 140);
             this.addPiece("puzzle_peppa4_clip-5.png", 366, 360);
             _playPanel.setBackgroundImage('puzzle_peppa4_background.png');
+        }
+        else if (_levelNumber === 4)
+        {
+            this.addPiece("puzzle_peppa5_clip-1.png", 213, 341);
+            this.addPiece("puzzle_peppa5_clip-2.png", 84, 259);
+            this.addPiece("puzzle_peppa5_clip-3.png", 314, 387);
+            this.addPiece("puzzle_peppa5_clip-4.png", 372, 248);
+            _playPanel.setBackgroundImage('puzzle_peppa5_background.png');
         }
 
        _piecesPanel.initPiecesWithThumbails(this.m_pieces);

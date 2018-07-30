@@ -44,8 +44,8 @@ function Desktop()
         var toolbarCenterY = Desktop.C_PLAY_PANEL_WIDTH - 10;
         this.m_btnBack = new CanvasControl();
         this.m_btnBack.initButtonStyle(viewMngr.getCanvasEx(), toolbarCenterX - 15, toolbarCenterY - 15, 30, 30, "");
-        this.m_btnBack.setImage("home_up.png");
-        this.m_btnBack.setImageDown("home_down.png");
+        this.m_btnBack.setImage("back_up.png");
+        this.m_btnBack.setImageDown("back_down.png");
         this.m_btnBack.registerOnClick(this, this.btnBack_click_controller);
         this.m_btnBack.setEnabled(false);
         this.m_btnBack.setVisible(false);

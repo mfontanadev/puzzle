@@ -1,7 +1,5 @@
 function PlayPanel() 
 {
-    this.m_viewParent = null;
-
     this.m_visible = true;
 
     this.m_bitmap = null;
@@ -10,10 +8,8 @@ function PlayPanel()
     this.m_width = 0;
     this.m_height = 0;
 
-    PlayPanel.prototype.init = function (_viewParent, _x1, _y1, _width, _height) 
+    PlayPanel.prototype.init = function (_x1, _y1, _width, _height) 
     {
-        this.m_viewParent = _viewParent;
-
         this.m_x1 = _x1;
         this.m_y1 = _y1;
         this.m_width = _width;
@@ -36,14 +32,14 @@ function PlayPanel()
     PlayPanel.prototype.render = function () 
     {
         renderRectangleFilled( 
-                    this.m_viewParent.m_canvasEx.m_canvas, 
-                    this.m_viewParent.m_canvasEx.m_context, 
+                    viewMngr.getCanvasEx().m_canvas, 
+                    viewMngr.getCanvasEx().m_context, 
                     this.m_x1, this.m_y1,
                     this.m_width, this.m_height, "gray");
         
         drawImageScaled( 
-                        this.m_viewParent.m_canvasEx.m_canvas, 
-                        this.m_viewParent.m_canvasEx.m_context, 
+                        viewMngr.getCanvasEx().m_canvas, 
+                        viewMngr.getCanvasEx().m_context, 
                         this.m_bitmap, 
                         this.m_x1, this.m_y1,
                         this.m_width, this.m_height);
@@ -54,7 +50,7 @@ function PlayPanel()
     // ****************************************
     PlayPanel.prototype.setBackgroundImage = function (_imageName) 
     {
-        this.m_bitmap = this.m_viewParent.getBitmapManagerInstance().getImageByName(_imageName);
+        this.m_bitmap = viewMngr.getBitmapManagerInstance().getImageByName(_imageName);
     }; 
 
 };

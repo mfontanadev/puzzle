@@ -56,6 +56,6 @@ function appInitContext()
  	viewMngr.initializeActivities();
 
  	// Start animation loop.
-	viewMngr.navigateTo(PuzzleContext.C_ACTIVITY_PLAY);
+	viewMngr.navigateTo(PuzzleContext.C_ACTIVITY_MAIN);
 	viewMngr.animationCycle();	
 }

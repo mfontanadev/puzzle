@@ -2,8 +2,6 @@ Piece.C_ALLOCATION_TOLERANCE = 20;  // in pixels.
 
 function Piece () 
 { 
-    this.m_viewParent = null;
-
     this.m_bitmap = null;
     this.m_rectThumbail = null;
     this.m_xTarget = 0;
@@ -15,12 +13,10 @@ function Piece ()
     this.m_mouseOver = false;
     this.m_avoidSoundRecursivity = false;
 
-    Piece.prototype.init = function (_viewParent, _pieceImage, _xTarget, _yTarget) 
+    Piece.prototype.init = function (_pieceImage, _xTarget, _yTarget) 
     {
-        this.m_viewParent = _viewParent;
-
         if (_pieceImage !== "")
-            this.m_bitmap = this.m_viewParent.getBitmapManagerInstance().getImageByName(_pieceImage);
+            this.m_bitmap = viewMngr.getBitmapManagerInstance().getImageByName(_pieceImage);
 
         this.m_rectThumbail = new ChRect(); 
         this.m_xTarget = _xTarget;
@@ -45,13 +41,14 @@ function Piece ()
         }
         else
         {
+		    // console.log(_cx, ",", _cy);	// Uncomment when editing levels.
             if (this.isOverTarget(_cx, _cy) === true)
             {
                 this.updateMouseOverPosition(this.m_xTarget, this.m_yTarget);
              
                 if (this.m_avoidSoundRecursivity === false)
                 {
-                    this.m_viewParent.getSoundManagerInstance().playSoundByName("allocated.wav");
+                    viewMngr.getSoundManagerInstance().playSoundByName("allocated.wav");
 
                     this.m_avoidSoundRecursivity = true;
                 }
@@ -109,11 +106,12 @@ function Piece ()
         }
     }
 
-    Piece.prototype.render = function (_canvas, _context) 
+    Piece.prototype.render = function () 
     {
-       drawImageRotationTransparentScaled(_canvas, _context, this.m_bitmap, this.m_x, this.m_y, 0, 1, this.getScale());
-    
-       //renderCircle(_canvas, _context, this.m_xTarget, this.m_yTarget, 2, "yellow");
+       drawImageRotationTransparentScaled(
+           viewMngr.getCanvasEx().m_canvas, 
+           viewMngr.getCanvasEx().m_context, 
+           this.m_bitmap, this.m_x, this.m_y, 0, 1, this.getScale());
     }
 
     Piece.prototype.setThumbailRectangle = function (_rect) 

@@ -1,17 +1,13 @@
-LevelFactory.C_LEVELS_COUNT = 3;
-
-function LevelFactory () 
+function Level () 
 { 
-    this.m_viewParent = null;
     this.m_pieces = null;
 
-    LevelFactory.prototype.init = function (_viewParent, _pieces) 
+    Level.prototype.init = function (_pieces) 
     {
-        this.m_viewParent = _viewParent;
         this.m_pieces = _pieces;
     }
 
-    LevelFactory.prototype.loadLevel = function (_levelNumber, _playPanel, _piecesPanel) 
+    Level.prototype.loadLevel = function (_levelNumber, _playPanel, _piecesPanel) 
     {
         chClearArray(this.m_pieces);
         if (_levelNumber === 0)
@@ -36,15 +32,24 @@ function LevelFactory ()
             this.addPiece("puzzle_peppa3_clip-4.png", 91, 264);
             _playPanel.setBackgroundImage('puzzle_peppa3_background.png');
         }
+        else if (_levelNumber === 3)
+        {
+            this.addPiece("puzzle_peppa4_clip-1.png", 307, 145);
+            this.addPiece("puzzle_peppa4_clip-2.png", 418, 91);
+            this.addPiece("puzzle_peppa4_clip-3.png", 152, 313);
+            this.addPiece("puzzle_peppa4_clip-4.png", 230, 140);
+            this.addPiece("puzzle_peppa4_clip-5.png", 366, 360);
+            _playPanel.setBackgroundImage('puzzle_peppa4_background.png');
+        }
 
        _piecesPanel.initPiecesWithThumbails(this.m_pieces);
     };
 
-    LevelFactory.prototype.addPiece = function (_pieceImage, _xTarget, _yTarget) 
+    Level.prototype.addPiece = function (_pieceImage, _xTarget, _yTarget) 
     {
         var pieceItem = new Piece();
 
-        pieceItem.init(this.m_viewParent, _pieceImage, _xTarget, _yTarget);
+        pieceItem.init(_pieceImage, _xTarget, _yTarget);
 
         this.m_pieces.push(pieceItem);
     };

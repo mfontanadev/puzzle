@@ -4,7 +4,7 @@
 		<head>
 
 			<!-- Title -->
-			<title>Default title v1.00</title>
+			<title>Default title v1.0.0</title>
 			<!-- Viewport -->
 			<meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
 			<style>
@@ -45,11 +45,19 @@
 			<script src="../controllers/entities/playPanel.js"></script>
 			<script src="../controllers/entities/piecesPanel.js"></script>
 			<script src="../controllers/entities/desktop.js"></script>
+			<script src="../controllers/entities/levelThumbail.js"></script>
 			<script src="../controllers/entities/piece.js"></script>
-			<script src="../controllers/entities/levelSelector.js"></script>
-			<script src="../controllers/entities/levelFactory.js"></script>
+			<script src="../controllers/entities/levelSelectorPanel.js"></script>
+			<script src="../controllers/entities/level.js"></script>
 
+			<!-- Flows -->
+			<script src="../controllers/flows/mainFlow.js"></script>
+			<script src="../controllers/flows/levelsFlow.js"></script>
 			<script src="../controllers/flows/playFlow.js"></script>
+
+			<!-- Activities -->
+			<script src="../controllers/activities/puzzleMainActivity.js"></script>
+			<script src="../controllers/activities/puzzleLevelsActivity.js"></script>
 			<script src="../controllers/activities/puzzlePlayActivity.js"></script>
 
 			<script src="../controllers/puzzleController.js"></script>
@@ -57,7 +65,7 @@
 
 		<!--<body background="background_green.jpg">-->
 		<body>
-			<canvas id="idCanvasBack" style="solid #FF0000;"></canvas>
+			<canvas id="idCanvasBack" width="640" height="480" style="solid #FF0000;"></canvas>
 			<canvas id="idCanvas" width="640" height="480" style="solid #FF0000;"></canvas>
 		</body>
 	</html>

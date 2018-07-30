@@ -3,8 +3,6 @@ PiecesPanel.C_ROWS = 3;
 
 function PiecesPanel() 
 {
-    this.m_viewParent = null;
-
     this.m_visible = true;
 
     this.m_x1 = 0;
@@ -15,10 +13,8 @@ function PiecesPanel()
     this.m_thumbails = new Array();
     this.m_pieces = null;
 
-    PiecesPanel.prototype.init = function (_viewParent, _x1, _y1, _width, _height) 
+    PiecesPanel.prototype.init = function (_x1, _y1, _width, _height) 
     {
-        this.m_viewParent = _viewParent;
-
         this.m_x1 = _x1;
         this.m_y1 = _y1;
         this.m_width = _width;
@@ -68,8 +64,8 @@ function PiecesPanel()
             rect = this.m_thumbails[i].m_rectThumbail;
 
             renderRectangleFilled(
-                        this.m_viewParent.m_canvasEx.m_canvas, 
-                        this.m_viewParent.m_canvasEx.m_context, 
+                        viewMngr.getCanvasEx().m_canvas, 
+                        viewMngr.getCanvasEx().m_context, 
                         this.m_thumbails[i].m_x1, this.m_thumbails[i].m_y1, 
                         this.m_thumbails[i].width(), this.m_thumbails[i].height(), "white"
                         );

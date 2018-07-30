@@ -1,10 +1,22 @@
 module.exports = function(app)
 {
 	// ACTIVITIES
+	app.get ('/controllers/activities/puzzleMainActivity.js', 
+		function (req, res) {res.sendFile(__dirname + '/activities/puzzleMainActivity.js');});
+
+	app.get ('/controllers/activities/puzzleLevelsActivity.js', 
+		function (req, res) {res.sendFile(__dirname + '/activities/puzzleLevelsActivity.js');});
+
 	app.get ('/controllers/activities/puzzlePlayActivity.js', 
 		function (req, res) {res.sendFile(__dirname + '/activities/puzzlePlayActivity.js');});
 
 	// FLOWS
+	app.get ('/controllers/flows/mainFlow.js', 
+		function (req, res) {res.sendFile(__dirname + '/flows/mainFlow.js');});
+
+	app.get ('/controllers/flows/levelsFlow.js', 
+		function (req, res) {res.sendFile(__dirname + '/flows/levelsFlow.js');});
+
 	app.get ('/controllers/flows/playFlow.js', 
 		function (req, res) {res.sendFile(__dirname + '/flows/playFlow.js');});
 
@@ -28,14 +40,15 @@ module.exports = function(app)
 	app.get ('/controllers/entities/desktop.js', 
 		function (req, res) {res.sendFile(__dirname + '/entities/desktop.js');});
 
+	app.get ('/controllers/entities/levelThumbail.js', 
+		function (req, res) {res.sendFile(__dirname + '/entities/levelThumbail.js');});
+
 	app.get ('/controllers/entities/piece.js', 
 		function (req, res) {res.sendFile(__dirname + '/entities/piece.js');});
 
-	app.get ('/controllers/entities/levelSelector.js', 
-		function (req, res) {res.sendFile(__dirname + '/entities/levelSelector.js');});
+	app.get ('/controllers/entities/levelSelectorPanel.js', 
+		function (req, res) {res.sendFile(__dirname + '/entities/levelSelectorPanel.js');});
 
-	app.get ('/controllers/entities/levelFactory.js', 
-		function (req, res) {res.sendFile(__dirname + '/entities/levelFactory.js');});
-
-	console.log("   controllers/index.js: OK");
+	app.get ('/controllers/entities/level.js', 
+		function (req, res) {res.sendFile(__dirname + '/entities/level.js');});
 }

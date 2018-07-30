@@ -1,55 +1,54 @@
 Desktop.C_PLAY_PANEL_WIDTH = 460;
 Desktop.C_PIECES_PANEL_WIDTH = 150;
 
+Desktop.C_LEVEL_FINISHED_DELAY_SECONDS = 3; 
+
 function Desktop() 
 {
-    this.m_viewParent = null;
-    this.m_levelFactory = null;
+    this.m_level = null;
 
     this.m_desktopBitmap = null;
+    this.m_backgroundBitmap = null;
+    this.m_levelFinishedBitmap = null;
+
     this.m_pieces = new Array();
-    this.m_currentLevelIndex = 0;
-    this.m_btnLevelSelector = null;
+    this.m_currentLevelIndex = -1;
+    this.m_btnBack = null;
 
     this.m_playPanel = null; 
     this.m_piecesPanel = null; 
 
     this.m_observer = null;
+    this.m_levelFinishedStartTimer = 0;
 
-    this.m_enabled = true;
+    this.m_levelFinished = false;
 
-    Desktop.prototype.init = function (_viewParent) 
+    Desktop.prototype.init = function () 
     {
-        this.m_viewParent = _viewParent;
-
         this.m_playPanel = new PlayPanel();
-        this.m_playPanel.init(this.m_viewParent, 
-                                    10, 10, 
-                                    Desktop.C_PLAY_PANEL_WIDTH, Desktop.C_PLAY_PANEL_WIDTH);
+        this.m_playPanel.init(10, 10, Desktop.C_PLAY_PANEL_WIDTH, Desktop.C_PLAY_PANEL_WIDTH);
 
         this.m_piecesPanel = new PiecesPanel();
-        this.m_piecesPanel.init(this.m_viewParent, 
-                                    Desktop.C_PLAY_PANEL_WIDTH + 18, 10, 
-                                    Desktop.C_PIECES_PANEL_WIDTH, Desktop.C_PLAY_PANEL_WIDTH);
+        this.m_piecesPanel.init(Desktop.C_PLAY_PANEL_WIDTH + 18, 10, 
+                                Desktop.C_PIECES_PANEL_WIDTH, Desktop.C_PLAY_PANEL_WIDTH);
 
-        this.m_levelFactory = new LevelFactory();
-        this.m_levelFactory.init(this.m_viewParent, this.m_pieces);
-        this.m_currentLevelIndex = 0;
-        this.loadLevel(this.m_currentLevelIndex);
+        this.m_level = new Level();
+        this.m_level.init(this.m_pieces);
 
-        this.m_desktopBitmap = this.m_viewParent.getBitmapManagerInstance().getImageByName('desktop_theme1.png');
-
+        this.m_desktopBitmap = viewMngr.getBitmapManagerInstance().getImageByName('desktop_screen.png');
+        this.m_backgroundBitmap = viewMngr.getBitmapManagerInstance().getImageByName("toolbar_background.png");
+        this.m_levelFinishedBitmap = viewMngr.getBitmapManagerInstance().getImageByName("level_finished_eng.png");
+        
         // Open/Close level selector button.   
-        var toolbarCenterX = Desktop.C_PLAY_PANEL_WIDTH + ((this.m_viewParent.m_canvasEx.m_canvas.width - Desktop.C_PLAY_PANEL_WIDTH) / 2);
+        var toolbarCenterX = Desktop.C_PLAY_PANEL_WIDTH + ((viewMngr.getCanvasEx().m_canvas.width - Desktop.C_PLAY_PANEL_WIDTH) / 2);
         var toolbarCenterY = Desktop.C_PLAY_PANEL_WIDTH - 10;
-        this.m_btnLevelSelector = new CanvasControl();
-        this.m_btnLevelSelector.initButtonStyle(this.m_viewParent.m_canvasEx, 
-                                toolbarCenterX - 15, toolbarCenterY - 15, 30, 30, "");
-        this.m_btnLevelSelector.setImage("toolbar_open_up.png");
-        this.m_btnLevelSelector.setImageDown("toolbar_open_down.png");
-        this.m_btnLevelSelector.registerOnClick(this, this.btnLevelSelector_click_controller);
-        this.m_btnLevelSelector.setEnabled(true);
-        this.m_btnLevelSelector.setVisible(true);
+        this.m_btnBack = new CanvasControl();
+        this.m_btnBack.initButtonStyle(viewMngr.getCanvasEx(), toolbarCenterX - 15, toolbarCenterY - 15, 30, 30, "");
+        this.m_btnBack.setImage("home_up.png");
+        this.m_btnBack.setImageDown("home_down.png");
+        this.m_btnBack.registerOnClick(this, this.btnBack_click_controller);
+        this.m_btnBack.setEnabled(false);
+        this.m_btnBack.setVisible(false);
     };
 
     // ****************************************
@@ -69,8 +68,7 @@ function Desktop()
 
         if (this.isLevelFinished() === true)
         {
-            this.m_viewParent.getSoundManagerInstance().playSoundByName("level_finished.wav");
-            this.hideLevelSelectorIcon();
+            this.hideControls();
             this.notify(PlayFlow.C_EVENT_ON_FINISH_LEVEL);
         }
     };
@@ -83,31 +81,39 @@ function Desktop()
 
         this.renderPieces() 
 
-        if (this.m_enabled === false)
-        {
-            renderRectangleFilled(
-                    this.m_viewParent.m_canvasEx.m_canvas, 
-                    this.m_viewParent.m_canvasEx.m_context, 
-                    10, 10, this.m_viewParent.m_canvasEx.m_canvas.width - 20, this.m_viewParent.m_canvasEx.m_canvas.height - 20,
-                    rgbaToColor(0,0,0, 0.50));
-        }
-
         drawImageTransparent( 
-            this.m_viewParent.m_canvasEx.m_canvas, 
-            this.m_viewParent.m_canvasEx.m_context, 
+            viewMngr.getCanvasEx().m_canvas, 
+            viewMngr.getCanvasEx().m_context, 
             this.m_desktopBitmap, 
             0, 0, 1);
 
-        this.m_btnLevelSelector.render();
+        this.m_btnBack.render();
 
         this.renderSelectedPiece() 
+
+        if (this.isLevelFinished() === true)
+        {
+            drawImageRotationTransparentScaled( 
+                        viewMngr.getCanvasEx().m_canvas, 
+                        viewMngr.getCanvasEx().m_context, 
+                        this.m_backgroundBitmap, 
+                        Desktop.C_PLAY_PANEL_WIDTH / 2, Desktop.C_PLAY_PANEL_WIDTH / 2,
+                        0,1,1);
+
+            drawImageRotationTransparentScaled( 
+                            viewMngr.getCanvasEx().m_canvas, 
+                            viewMngr.getCanvasEx().m_context, 
+                            this.m_levelFinishedBitmap, 
+                            Desktop.C_PLAY_PANEL_WIDTH / 2, Desktop.C_PLAY_PANEL_WIDTH / 2,
+                            0,1,1);                
+        }
     };
 
     Desktop.prototype.renderPieces = function () 
     {
         for (var i = 0; i < this.m_pieces.length; i++) 
         {
-            this.m_pieces[i].render(this.m_viewParent.m_canvasEx, this.m_viewParent.m_canvasEx.m_context);
+            this.m_pieces[i].render();
         }
     };
 
@@ -117,7 +123,7 @@ function Desktop()
         {
             if (this.m_pieces[i].isMouseOver() === true)
             {
-                this.m_pieces[i].render(this.m_viewParent.m_canvasEx, this.m_viewParent.m_canvasEx.m_context);
+                this.m_pieces[i].render();
             }
         }
     };
@@ -125,40 +131,20 @@ function Desktop()
     // ****************************************
     // Auxiliar functions
     // ****************************************
-    Desktop.prototype.nextLevel = function () 
+    Desktop.prototype.reset = function () 
     {
-        this.m_currentLevelIndex++;
-        if (this.m_currentLevelIndex >= this.getLevelsCount())
-        {
-            this.m_currentLevelIndex = 0;
-        }
-        this.loadLevel(this.m_currentLevelIndex);
-    };
-
-    Desktop.prototype.previousLevel = function () 
-    {
-        this.m_currentLevelIndex--;
-        if (this.m_currentLevelIndex < 0)
-        {
-            this.m_currentLevelIndex = this.getLevelsCount() - 1;
-        }
-        this.loadLevel(this.m_currentLevelIndex);
-    };
-    
-    Desktop.prototype.loadLevel = function (_levelNumber) 
-    {
-        this.m_levelFactory.loadLevel(_levelNumber, this.m_playPanel, this.m_piecesPanel, this.m_pieces);  
+        this.m_levelFinished = false;
     }
 
-    Desktop.prototype.getLevelsCount = function () 
+    Desktop.prototype.loadLevel = function (_levelNumber) 
     {
-        return LevelFactory.C_LEVELS_COUNT;
-    };
+        this.m_level.loadLevel(_levelNumber, this.m_playPanel, this.m_piecesPanel, this.m_pieces);  
+    }
 
     Desktop.prototype.processMouseOverPieces = function () 
     {
         var pieces = this.m_piecesPanel.getPiecesCollection();
-        var mouse = this.m_viewParent.getMouseManagerInstance();
+        var mouse = viewMngr.getMouseManagerInstance();
 
         var index = 0;
         var mouseOverPIeceIndex = -1;
@@ -190,50 +176,49 @@ function Desktop()
         }
     };
 
-    Desktop.prototype.btnLevelSelector_click_controller = function (_event, _sender) 
+    Desktop.prototype.btnBack_click_controller = function (_event, _sender) 
     {
-        _sender.getOnClickParent().hideLevelSelectorIcon();
-        _sender.getOnClickParent().notify(PlayFlow.C_EVENT_ON_LEVEL_SELECTOR_CLIC);
+        _sender.getOnClickParent().notify(PlayFlow.C_EVENT_ON_BUTTON_BACK);
     }
 
-    Desktop.prototype.showLevelSelectorIcon = function () 
+    Desktop.prototype.showControls = function () 
     {
-        this.m_btnLevelSelector.setEnabled(true);
-        this.m_btnLevelSelector.setVisible(true);
+        this.m_btnBack.setEnabled(true);
+        this.m_btnBack.setVisible(true);
     }; 
 
-    Desktop.prototype.hideLevelSelectorIcon = function () 
+    Desktop.prototype.hideControls = function () 
     {
-        this.m_btnLevelSelector.setEnabled(false);
-        this.m_btnLevelSelector.setVisible(false);
+        this.m_btnBack.setEnabled(false);
+        this.m_btnBack.setVisible(false);
     }; 
 
     Desktop.prototype.isLevelFinished = function () 
     {
-        var pieces = this.m_piecesPanel.getPiecesCollection();
-        var allPiecesAllocated = true; 
-
-        // Get first piece non allocated.
-        for (index = 0; index < pieces.length; index++) 
+        if (this.m_levelFinished === false)
         {
-            if (pieces[index].isPieceAllocated() === false)
+            var pieces = this.m_piecesPanel.getPiecesCollection();
+            var allPiecesAllocated = true; 
+
+            // Get first piece non allocated.
+            for (index = 0; index < pieces.length; index++) 
             {
-                allPiecesAllocated = false;
-                break;
+                if (pieces[index].isPieceAllocated() === false)
+                {
+                    allPiecesAllocated = false;
+                    break;
+                }
             }
-        }
         
-        return allPiecesAllocated;
+            this.m_levelFinished = allPiecesAllocated;
+        }
+
+        return this.m_levelFinished;
     };
 
     Desktop.prototype.registerObserver = function (_observer) 
     {
         this.m_observer = _observer;
-    }    
-
-    Desktop.prototype.setEnabled = function (_value) 
-    {
-        this.m_enabled = _value;
     }    
 
     Desktop.prototype.notify = function (_event) 

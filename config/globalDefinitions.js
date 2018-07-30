@@ -23,14 +23,31 @@ var global_bitmap_definition =
     'puzzles\\03\\puzzle_peppa3_clip-3.png',
     'puzzles\\03\\puzzle_peppa3_clip-4.png',
 
-    'desktop_theme1.png',
+    'puzzles\\04\\puzzle_peppa4_background.png',
+    'puzzles\\04\\puzzle_peppa4_clip-1.png',
+    'puzzles\\04\\puzzle_peppa4_clip-2.png',
+    'puzzles\\04\\puzzle_peppa4_clip-3.png',
+    'puzzles\\04\\puzzle_peppa4_clip-4.png',
+    'puzzles\\04\\puzzle_peppa4_clip-5.png',
+    
+    'desktop_screen.png',
+    'main_screen.png',
+
+    'main_background.png',
+
+    'play_up.png',
+    'play_down.png',
+
+    'titleLevelSelector_up.png',
+    'titleLevelSelector_down.png',
+    'thumbail_background.png',
 
     'ok_up.png',
     'ok_down.png',
     'back_up.png',
     'back_down.png',
-    'toolbar_open_up.png',
-    'toolbar_open_down.png',
+    'home_up.png',
+    'home_down.png',
     'toolbar_background.png',
     'level_finished_spa.png',
     'level_finished_eng.png',
@@ -38,18 +55,25 @@ var global_bitmap_definition =
     'left_down.png',
     'right_up.png',
     'right_down.png',
-    'background_green.jpg'
+    'background_green.jpg',
+    'star_down.png',
+    'star_up.png',
+    'close_padlock.png',
+    'open_padlock.png'
 ];
 
 // Definition of states for the machine of finite states used in app main loop. 
 MainLoopState.C_APP_STATE_NOT_SET = 0;
 MainLoopState.C_APP_STATE_INTRO = 1;
+MainLoopState.C_APP_STATE_MAIN = 2;
+MainLoopState.C_APP_STATE_LEVEL_SELECTION = 3;
+MainLoopState.C_APP_STATE_PLAYING = 4;
 MainLoopState.C_LOCAL_STORE_NAMESPACE = "puzzle";
 function MainLoopState() 
 { 
 }
 
-Globals.C_APPLICATION_TITLE_AND_VERSION = 'Puzzle v1.3.2';
+Globals.C_APPLICATION_TITLE_AND_VERSION = 'Puzzle v1.4.2';
 function Globals() 
 { 
     this.m_mainLoopState = new MainLoopState(); 

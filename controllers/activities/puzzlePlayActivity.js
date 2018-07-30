@@ -1,12 +1,10 @@
 PuzzlePlayActivity.self = null;
 
-function PuzzlePlayActivity(_id, _viewParent) 
+function PuzzlePlayActivity(_id) 
 { 
 	PuzzlePlayActivity.self = this;
 
 	this.m_id = _id;
-	this.m_viewParent = _viewParent; 
-
 	this.m_flow = null;
 };
 
@@ -17,22 +15,20 @@ PuzzlePlayActivity.prototype.getActivityName = function ()
 
 PuzzlePlayActivity.prototype.initialize = function ()
 {   
-	console.log(this.getActivityName());
+	msglog(this.getActivityName());
 
 	this.m_flow = new PlayFlow();
-	this.m_flow.init(this.m_viewParent, this);
+	this.m_flow.init(this);
 
 	this.createControls();
 };
 
 PuzzlePlayActivity.prototype.createControls = function ()
 {
-    var tmpCanvas = this.m_viewParent.m_canvasEx;
 };
 
 PuzzlePlayActivity.prototype.onEnterActivity = function ()
 {
-	this.m_flow.setState(PlayFlow.C_PLAY_FLOW_APPSTATE_PLAYING);
 };
 
 PuzzlePlayActivity.prototype.handleInputs = function ()
@@ -58,7 +54,7 @@ PuzzlePlayActivity.prototype.renderControls = function ()
 
 PuzzlePlayActivity.prototype.btnBack_controller = function (_e, _sender)
 {
-	PuzzlePlayActivity.self.m_viewParent.navigateTo(PuzzleContext.C_ACTIVITY_MENU);    
+	viewMngr.navigateTo(PuzzleContext.C_ACTIVITY_MENU);    
 };
 
 PuzzlePlayActivity.prototype.onLeaveActivity = function ()

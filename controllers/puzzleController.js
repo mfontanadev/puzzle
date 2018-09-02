@@ -16,6 +16,7 @@ window.onload = function()
 	var bitmapManager = viewMngr.getBitmapManagerInstance();
 	bitmapManager.setProgressBar(viewMngr.getProgressBar());
 	bitmapManager.setProgressBarMessage("Loading bitmpas");
+	bitmapManager.setImagesPath(__global.get_C_IMAGES_PATH());
 	bitmapManager.setFilenamesArray(global_bitmap_definition);
 
 	//var bitmapFilter = new BitmapFilter();

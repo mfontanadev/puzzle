@@ -42,6 +42,11 @@ function MainLoopState()
 }
 
 Globals.C_APPLICATION_TITLE_AND_VERSION = 'Puzzle v1.3.2';
+Globals.C_IMAGES_PATH = '..\\public\\assets\\img\\';
+Globals.C_MOCKDB = true;
+Globals.C_DB_CLIENT = null;
+Globals.C_BASE_PATH = '';
+Globals.C_SERVICES = null;
 function Globals() 
 { 
     this.m_mainLoopState = new MainLoopState(); 
@@ -55,6 +60,31 @@ function Globals()
 	{
 		return Globals.C_APPLICATION_TITLE_AND_VERSION;
 	}
+	
+	Globals.prototype.get_C_IMAGES_PATH = function()
+	{
+		return Globals.C_IMAGES_PATH;
+	}
+
+	Globals.prototype.get_C_MOCKDB = function()
+	{
+		return Globals.C_MOCKDB;
+	}
+
+	Globals.prototype.get_C_DB_CLIENT = function()
+	{
+		return Globals.C_DB_CLIENT;
+	}
+
+	Globals.prototype.get_C_BASE_PATH = function()
+	{
+		return Globals.C_BASE_PATH;
+	}	
+	
+	Globals.prototype.get_C_SERVICES = function()
+	{
+		return Globals.C_SERVICES;
+	}	
 }
 
 if (typeof module !== 'undefined' && module !== null)

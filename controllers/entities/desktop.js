@@ -45,8 +45,8 @@ function Desktop()
         this.m_btnLevelSelector = new CanvasControl();
         this.m_btnLevelSelector.initButtonStyle(this.m_viewParent.m_canvasEx, 
                                 toolbarCenterX - 15, toolbarCenterY - 15, 30, 30, "");
-        this.m_btnLevelSelector.setImage("toolbar_open_up.png");
-        this.m_btnLevelSelector.setImageDown("toolbar_open_down.png");
+        this.m_btnLevelSelector.setImagePath("toolbar_open_up.png", __global.get_C_IMAGES_PATH());
+        this.m_btnLevelSelector.setImageDownPath("toolbar_open_down.png", __global.get_C_IMAGES_PATH());
         this.m_btnLevelSelector.registerOnClick(this, this.btnLevelSelector_click_controller);
         this.m_btnLevelSelector.setEnabled(true);
         this.m_btnLevelSelector.setVisible(true);

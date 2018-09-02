@@ -41,8 +41,8 @@ function LevelSelector()
         this.m_btnPreviousLevel = new CanvasControl();
         this.m_btnPreviousLevel.initButtonStyle(this.m_viewParent.m_canvasEx, 
                                 middleW - 30 - 30, middleH - 15, 30, 30, "");
-        this.m_btnPreviousLevel.setImage("left_up.png") ;
-        this.m_btnPreviousLevel.setImageDown("left_down.png");
+        this.m_btnPreviousLevel.setImagePath("left_up.png", __global.get_C_IMAGES_PATH()) ;
+        this.m_btnPreviousLevel.setImageDownPath("left_down.png", __global.get_C_IMAGES_PATH());
         this.m_btnPreviousLevel.registerOnClick(this, this.btnPreviousLevel_click_controller);
         this.m_btnPreviousLevel.setEnabled(false);
         this.m_btnPreviousLevel.setVisible(false);
@@ -50,8 +50,8 @@ function LevelSelector()
         this.m_btnNextLevel = new CanvasControl();
         this.m_btnNextLevel.initButtonStyle(this.m_viewParent.m_canvasEx, 
                                 middleW + 30, middleH - 15, 30, 30, "");
-        this.m_btnNextLevel.setImage("right_up.png") ;
-        this.m_btnNextLevel.setImageDown("right_down.png");
+        this.m_btnNextLevel.setImagePath("right_up.png", __global.get_C_IMAGES_PATH()) ;
+        this.m_btnNextLevel.setImageDownPath("right_down.png", __global.get_C_IMAGES_PATH());
         this.m_btnNextLevel.registerOnClick(this, this.btnNextLevel_click_controller);
         this.m_btnNextLevel.setEnabled(false);
         this.m_btnNextLevel.setVisible(false);
@@ -59,8 +59,8 @@ function LevelSelector()
         this.m_btnBack = new CanvasControl();
         this.m_btnBack.initButtonStyle(this.m_viewParent.m_canvasEx, 
                                 middleW - 15, middleH - 15, 30, 30, "");
-        this.m_btnBack.setImage("ok_up.png") ;
-        this.m_btnBack.setImageDown("ok_down.png");
+        this.m_btnBack.setImagePath("ok_up.png", __global.get_C_IMAGES_PATH()) ;
+        this.m_btnBack.setImageDownPath("ok_down.png", __global.get_C_IMAGES_PATH());
         this.m_btnBack.registerOnClick(this, this.btnBack_click_controller);
         this.m_btnBack.setEnabled(false);
         this.m_btnBack.setVisible(false);

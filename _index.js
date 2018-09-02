@@ -1,3 +1,6 @@
+var __global = new Globals();
+
+/*
 var express = require("express");
 var app = express();
 var port = (process.env.PORT || 5000 );
@@ -110,7 +113,9 @@ else
 	global.__services.getInstance().init(null);
 	console.log('Database initialized (mock).');
 }
+*/
 
+/*
 // Start socket listening.
 console.log('');
 var io = require('socket.io').listen(app.listen(port));
@@ -127,4 +132,5 @@ if (typeof io === 'undefined')
 		}
 	);
 }
+*/
 
